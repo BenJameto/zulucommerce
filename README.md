@@ -36,7 +36,7 @@ Las integraciones y despliegues se gestionan mediante pipelines de CI/CD, asegur
 
 ## Instalación y Configuración
 ### Requisitos Previos
-- Docker y Docker Compose
+- Docker 
 - Node.js y npm
 - PostgreSQL
 - Kubernetes y kubectl
@@ -45,7 +45,6 @@ Las integraciones y despliegues se gestionan mediante pipelines de CI/CD, asegur
 ```bash
 git clone https://github.com/usuario/zulucommerce.git
 cd zulucommerce
-docker-compose up -d
 ```
 
 ### Despliegue en Kubernetes
