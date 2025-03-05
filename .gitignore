@@ -1,2 +1,90 @@
 *.pdf
-k3s.yaml
+k3s.yaml# ====================
+# 📦 Node.js
+# ====================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ====================
+# ⚛️ React
+# ====================
+/frontend/build/
+*.env.local
+*.env.development.local
+*.env.test.local
+*.env.production.local
+
+# ====================
+# 🐳 Docker
+# ====================
+*.tar
+**/Dockerfile
+docker-compose.override.yml
+.dockerignore
+
+# ====================
+# 🐘 PostgreSQL
+# ====================
+/database/*.sql
+pgdata/
+
+# ====================
+# ⚙️ Kubernetes (K3s)
+# ====================
+/k8s/*.yaml
+!k8s/namespace.yaml     # <- Opcional: No ignorar el namespace si quieres controlarlo por git
+*.kubeconfig
+
+# ====================
+# 🧩 Environment Variables
+# ====================
+.env
+.env.*
+
+# ====================
+# 💾 Logs
+# ====================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# ====================
+# 📦 Dependency directories
+# ====================
+/backend/node_modules/
+/frontend/node_modules/
+
+# ====================
+# 📡 Coverage
+# ====================
+coverage/
+*.lcov
+
+# ====================
+# 🎯 Build outputs
+# ====================
+/backend/dist/
+/frontend/build/
+
+# ====================
+# 🐍 Python (Si usas algún script para K8s)
+# ====================
+__pycache__/
+*.py[cod]
+*.pyo
+
+# ====================
+# 💣 System Files
+# ====================
+.DS_Store
+Thumbs.db
+
+# ====================
+# 🛡 VSCode Settings
+# ====================
+.vscode/
+*.code-workspace
