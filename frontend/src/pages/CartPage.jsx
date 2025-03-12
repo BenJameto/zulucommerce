@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './CartPage.css';
 
 const cartItems = [
@@ -53,7 +54,9 @@ const CartPage = () => {
                     <p>Subtotal: ${subtotal.toFixed(2)}</p>
                     <p>Envío: Gratis</p>
                     <p className="order-total">Total: ${total.toFixed(2)}</p>
-                    <button className="checkout-button">Ir a pagar</button>
+                    <Link to="/checkout">
+                        <button className="checkout-button">Ir a pagar</button>
+                    </Link>
                 </div>
             </div>
         </div>
