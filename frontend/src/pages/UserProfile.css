@@ -1,47 +1,175 @@
-.profile-container {
-    max-width: 600px;
-    margin: auto;
-    padding: 20px;
+/* ======== Variables CSS ======== */
+:root {
+    /* Modo Claro (default) */
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-bg: #f8f9fa;
+    --primary-color: #28a745;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+    --border-color: #e0e0e0;
+    --placeholder-bg: #e0e0e0;
+  }
+  
+  .dark-mode {
+    /* Modo Oscuro */
+    --bg-color: #121212;
+    --text-color: #f8f9fa;
+    --card-bg: #1e1e1e;
+    --primary-color: #4caf50;
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --border-color: #333333;
+    --placeholder-bg: #333333;
+  }
+  
+  /* ======== Estilos Base ======== */
+  body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+  }
+  
+  /* ======== Contenedor Principal ======== */
+  .profile-container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    box-sizing: border-box;
+    background-color: var(--bg-color);
+    transition: all 0.3s ease;
+  }
+  
+  /* ======== Títulos ======== */
+  .profile-container h1 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    margin-bottom: 1.5rem;
+    color: var(--text-color);
     text-align: center;
-    box-shadow: 0 4px 10px #28a745;    
-}
-
-.user-info {
-    background: var(--bg-color);
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px #28a745;
-}
-
-h1, h2 {
-    color:var(--text-color);
-}
-.user-photo {
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 15px;
+  }
+  
+  .profile-container h2 {
+    font-size: clamp(1.2rem, 4vw, 1.5rem);
+    margin: 1.5rem 0 1rem;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
+  }
+  
+  /* ======== Información de Usuario ======== */
+  .user-info {
+    background: var(--card-bg);
+    padding: 1.25rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px var(--shadow-color);
+    margin-bottom: 1.5rem;
+    transition: all 0.3s ease;
+  }
+  
+  .user-info p {
+    margin: 0.75rem 0;
+    font-size: 1rem;
+    text-align: left;
+    padding: 0 0.5rem;
+  }
+  
+  .user-info strong {
+    display: inline-block;
+    min-width: 80px;
+    color: var(--primary-color);
+  }
+  
+  /* ======== Foto de Perfil ======== */
+  .user-photo {
+    width: clamp(80px, 25vw, 120px);
+    height: clamp(80px, 25vw, 120px);
+    margin: 0 auto 1rem;
     border-radius: 50%;
     overflow: hidden;
-    background-color: #ccc;
+    background-color: var(--placeholder-bg);
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.user-photo img {
+    transition: all 0.3s ease;
+  }
+  
+  .user-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-.photo-placeholder {
-    font-size: 3rem;
+  }
+  
+  .photo-placeholder {
+    font-size: clamp(2rem, 8vw, 3rem);
     color: white;
-    background-color: #888;
+    background-color: var(--placeholder-bg);
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-}
+    transition: all 0.3s ease;
+  }
+  
+  /* ======== Historial de Compras ======== */
+  .profile-container ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .profile-container li {
+    background-color: var(--card-bg);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 0.25rem;
+    text-align: left;
+    font-size: 0.95rem;
+    box-shadow: 0 1px 3px var(--shadow-color);
+    display: flex;
+    justify-content: space-between;
+    transition: all 0.3s ease;
+  }
+  
+  .profile-container li span {
+    color: var(--primary-color);
+  }
+  
+  /* ======== Media Queries ======== */
+  @media (min-width: 600px) {
+    .profile-container {
+      max-width: 600px;
+      padding: 1.5rem;
+      margin: 1rem auto;
+      border-radius: 0.5rem;
+      box-shadow: 0 4px 10px var(--shadow-color);
+    }
+    
+    .user-info {
+      padding: 1.5rem;
+    }
+    
+    .profile-container li {
+      padding: 1rem;
+      font-size: 1rem;
+    }
+  }
+  
+  @media (max-width: 400px) {
+    .user-info p {
+      font-size: 0.9rem;
+    }
+    
+    .profile-container li {
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    .user-info strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+  }
