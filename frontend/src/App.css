@@ -36,3 +36,64 @@
     transform: rotate(360deg);
   }
 }
+/* ========================= */
+/* 🎨 Modo Claro (Por defecto) */
+/* ========================= */
+:root {
+  --bg-color: white;
+  --text-color: black;
+  --navbar-bg: #d0d0ce; /* Fondo del navbar en modo claro */
+}
+
+/* ========================= */
+/* 🌙 Modo Oscuro */
+/* ========================= */
+.dark-mode {
+  --bg-color: #121212;
+  --text-color: white;
+  --navbar-bg: #222; /* Fondo del navbar en modo oscuro */
+}
+
+/* ========================= */
+/* Aplicar los estilos al body */
+/* ========================= */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ========================= */
+/* Ajustes del Navbar */
+/* ========================= */
+.navbar {
+  background-color: var(--navbar-bg);
+}
+
+/* ========================= */
+/* Estilo del botón de cambio de tema */
+/* ========================= */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--text-color);
+  padding: 5px 10px;
+  cursor: pointer;
+  color: var(--text-color);
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.theme-toggle:hover {
+  background-color: var(--text-color);
+  color: var(--navbar-bg);
+}
+@media (max-width: 768px) {
+  body {
+      font-size: 14px;
+  }
+
+  .cart-container,
+  .checkout-container {
+      padding: 10px;
+  }
+}

@@ -1,0 +1,473 @@
+/* ======== Estilos base ======== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --navbar-bg: #fff;
+  --text-color: #000;
+  --bg-color: #f2f2f2;
+  --primary-color: #00913f;
+  --transition-speed: 0.3s;
+}
+
+/* ======== Navbar ======== */
+.navbar {
+  background-color: var(--navbar-bg);
+  color: var(--text-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Logo */
+.logo a {
+  font-size: clamp(1.1rem, 4vw, 1.5rem); /* Tamaño responsive */
+  font-weight: bold;
+  color: var(--text-color);
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: 20px;
+  transition: color var(--transition-speed);
+}
+
+.logo a:hover {
+  color: var(--primary-color);
+}
+
+/* Barra de búsqueda */
+.search-container {
+  flex: 1;
+  min-width: 150px;
+  max-width: 600px;
+  margin: 0 20px;
+  position: relative;
+  transition: all var(--transition-speed) ease;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 15px;
+  padding-right: 40px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all var(--transition-speed);
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0,145,63,0.2);
+}
+
+.search-close {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #777;
+  cursor: pointer;
+  display: none;
+  transition: color var(--transition-speed);
+}
+
+.search-close:hover {
+  color: var(--primary-color);
+}
+
+/* Botón de búsqueda móvil */
+.search-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-color);
+  padding: 8px;
+  margin-right: 10px;
+  display: none;
+  transition: color var(--transition-speed);
+}
+
+.search-toggle:hover {
+  color: var(--primary-color);
+}
+
+/* Menú de escritorio */
+.desktop-menu {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin-right: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 5px 0;
+  position: relative;
+  white-space: nowrap;
+  transition: color var(--transition-speed);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width var(--transition-speed);
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Botón de tema */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--text-color);
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--text-color);
+  border-radius: 25px;
+  transition: all var(--transition-speed);
+  font-size: 1rem;
+}
+
+.theme-toggle:hover {
+  background-color: var(--text-color);
+  color: var(--navbar-bg);
+}
+
+/* Controles móviles */
+.mobile-buttons {
+  display: none;
+  align-items: center;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  padding: 5px;
+  transition: all var(--transition-speed);
+}
+
+.menu-toggle:hover {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Menú desplegable móvil - Versión mejorada */
+.mobile-menu-container {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--navbar-bg);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  max-height: 0;
+  overflow-y: auto;
+  transition: max-height var(--transition-speed) ease-out;
+  z-index: 1001;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu-container.open {
+  max-height: calc(100vh - 70px);
+}
+
+.mobile-nav-links {
+  list-style: none;
+  padding: 20px;
+}
+
+.mobile-nav-links li {
+  margin-bottom: 15px;
+}
+
+.mobile-nav-links a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  display: block;
+  padding: 12px 15px;
+  border-radius: 6px;
+  transition: background-color var(--transition-speed);
+}
+
+.mobile-nav-links a:hover {
+  background-color: var(--bg-color);
+}
+
+.mobile-theme {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Overlay para el menú móvil */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity var(--transition-speed);
+  pointer-events: none;
+}
+
+.mobile-menu-container.open ~ .menu-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Barra de scroll */
+.mobile-menu-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mobile-menu-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* ======== Responsive ======== */
+
+/* Tabletas (768px o menos) */
+@media (max-width: 768px) {
+  .desktop-menu {
+      display: none;
+  }
+  
+  .mobile-buttons {
+      display: flex;
+  }
+  
+  .search-container {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      margin: 0;
+      padding: 10px 20px;
+      background-color: var(--navbar-bg);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      opacity: 0;
+      visibility: hidden;
+      z-index: 998;
+  }
+  
+  .search-container.active {
+      opacity: 1;
+      visibility: visible;
+  }
+  
+  .search-close {
+      display: block;
+  }
+  
+  .search-toggle {
+      display: block;
+  }
+  
+  .navbar-container {
+      padding: 15px 20px;
+  }
+  
+  .logo a {
+      margin-right: 15px;
+  }
+  
+  .mobile-menu-container {
+      top: 70px;
+  }
+  
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 70px);
+  }
+}
+
+/* Móviles medianos (480px-640px) - NUEVO PUNTO DE CORTE */
+@media (max-width: 640px) {
+  .navbar-container {
+      padding: 12px 15px;
+  }
+  
+  .search-bar {
+      padding: 8px 12px;
+  }
+  
+  .mobile-menu-container {
+      top: 65px;
+  }
+  
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 65px);
+  }
+}
+
+/* Móviles pequeños (480px o menos) */
+@media (max-width: 480px) {
+  .navbar-container {
+      padding: 10px 12px;
+  }
+  
+  .search-toggle, 
+  .menu-toggle {
+      font-size: 1.3rem;
+      padding: 6px;
+  }
+  
+  .mobile-menu-container {
+      top: 60px;
+  }
+  
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 60px);
+  }
+}
+
+/* Pantallas muy pequeñas (350px o menos) */
+@media (max-width: 350px) {
+  .navbar-container {
+      padding: 8px 10px;
+  }
+  
+  .search-toggle, 
+  .menu-toggle {
+      font-size: 1.1rem;
+      padding: 4px;
+  }
+  
+  .mobile-menu-container {
+      top: 56px;
+  }
+  
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 56px);
+  }
+}
+
+/* Pantallas ultra pequeñas (240px o menos) */
+@media (max-width: 240px) {
+  .navbar {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .navbar-container {
+    min-width: 240px;
+    padding: 6px 8px;
+  }
+
+  .logo a {
+    font-size: 0.95rem;
+    margin-right: 10px;
+  }
+
+  .search-toggle, 
+  .menu-toggle {
+    font-size: 1rem;
+    padding: 4px 6px;
+    min-width: 30px;
+  }
+
+  .mobile-menu-container {
+    top: 50px;
+  }
+
+  .mobile-menu-container.open {
+    max-height: calc(100vh - 50px);
+  }
+}
+
+/* Modo oscuro */
+.dark-mode {
+  --navbar-bg: #1a1a1a;
+  --text-color: #f0f0f0;
+  --bg-color: #2d2d2d;
+}
+
+.dark-mode .navbar {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.dark-mode .search-bar {
+  background-color: #333;
+  border-color: #444;
+  color: #fff;
+}
+
+.dark-mode .search-close {
+  color: #aaa;
+}
+
+.dark-mode .search-close:hover {
+  color: var(--primary-color);
+}
+
+.dark-mode .mobile-nav-links a:hover {
+  background-color: #3a3a3a;
+}
+
+.dark-mode .mobile-menu-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.dark-mode .menu-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Mejoras de interacción */
+.menu-toggle:active, 
+.search-toggle:active {
+  transform: scale(0.95);
+}
+
+.nav-links a:active,
+.mobile-nav-links a:active {
+  opacity: 0.8;
+}
+
+body {
+  transition: background-color 0.3s ease;
+}
