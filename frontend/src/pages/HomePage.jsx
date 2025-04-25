@@ -7,7 +7,7 @@ const HomePage = () => {
 
     useEffect(() => {
         // Llamar a la API del backend para obtener productos
-        fetch("http://localhost:5000/api/products")
+        fetch("http://localhost:4000/api/products")
             .then((res) => res.json())
             .then((data) => setProducts(data))
             .catch((error) => console.error("Error al cargar productos:", error));

@@ -19,7 +19,7 @@
   /* ======== Grid de Productos - Versión Mejorada ======== */
   .product-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); /* Más flexible que 200px */
+    grid-template-columns: repeat(3, 1fr); /* Más flexible que 200px */
     gap: 15px;
     padding: 15px;
     width: 100%;
