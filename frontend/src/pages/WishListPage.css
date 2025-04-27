@@ -1,0 +1,126 @@
+/* frontend/src/pages/WishListPage.css */
+
+/* 
+   Opcional: Dar un fondo claro a toda la página.
+   Si no deseas modificar el fondo global, elimina esta sección.
+*/
+body {
+    background-color: #f0f3f5;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .wishlist-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .wishlist-title {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 2rem;
+    color: #333;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+  }
+  
+  .empty-message {
+    text-align: center;
+    font-size: 1.1rem;
+    color: #666;
+    margin-top: 50px;
+  }
+  
+  .wishlist-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 10px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .wishlist-table thead {
+    background-color: #68B684; /* Puedes cambiar el color a tu preferencia */
+  }
+  
+  .wishlist-table th {
+    padding: 12px;
+    color: #fff;
+    font-weight: bold;
+    text-align: left;
+  }
+  
+  .wishlist-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+  }
+  
+  /* Efecto hover en cada fila de la tabla */
+  .wishlist-table tbody tr:hover {
+    background-color: #f2f2f2;
+  }
+  
+  .product-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .product-info img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .in-stock {
+    color: #28a745;
+    font-weight: bold;
+  }
+  
+  .out-of-stock {
+    color: #dc3545;
+    font-weight: bold;
+  }
+  
+  .add-to-cart-btn,
+  .remove-btn {
+    padding: 8px 12px;
+    margin-right: 5px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-btn {
+    background-color: #28a745; /* Verde */
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #218838;
+  }
+  
+  .remove-btn {
+    background-color: #dc3545; /* Rojo */
+  }
+  
+  .remove-btn:hover {
+    background-color: #c82333;
+  }
+  
+  .add-to-cart-btn:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+  }
+  

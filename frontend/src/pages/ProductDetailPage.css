@@ -1,0 +1,159 @@
+/* frontend/src/pages/ProductDetailPage.css */
+
+.product-detail-container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+  }
+  
+  .top-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .image-gallery {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .main-image img {
+    width: 350px;
+    height: 350px;
+    object-fit: cover;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .thumbnail-list {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .thumbnail.active {
+    border-color: #FFA41C; /* Color naranja estilo Amazon */
+  }
+  
+  .product-summary {
+    flex: 1;
+  }
+  
+  .product-summary h1 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .brand {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+  
+  .price {
+    font-size: 1.6rem;
+    color: #B12704; /* Color rojo estilo Amazon */
+    margin-bottom: 10px;
+  }
+  
+  .rating {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: #FFA41C;
+  }
+  
+  .reviews-count {
+    margin-left: 10px;
+    color: #007185;
+  }
+  
+  .add-to-cart-btn {
+    padding: 12px 20px;
+    background-color: #FFA41C;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-btn:hover {
+    background-color: #FF8C00;
+  }
+  
+  /* Sección de descripción y especificaciones */
+  .info-section {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .description, .specs {
+    flex: 1;
+  }
+  
+  .description h2,
+  .specs h2 {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+  
+  .specs ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .specs li {
+    margin-bottom: 6px;
+  }
+  
+  .specs strong {
+    color: #555;
+  }
+  
+  /* Sección de opiniones (reviews) */
+  .reviews-section {
+    margin-bottom: 30px;
+  }
+  
+  .reviews-section h2 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+  
+  .review {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+  }
+  
+  .review h3 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+  }
+  
+  .review .user {
+    font-size: 0.9rem;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  
+  .review .comment {
+    font-size: 1rem;
+    color: #444;
+  }
+  
