@@ -1,175 +1,318 @@
+/* frontend/src/pages/UserProfile.css (o como lo llames) */
+
 /* ======== Variables CSS ======== */
 :root {
-    /* Modo Claro (default) */
-    --bg-color: #ffffff;
-    --text-color: #000000;
-    --card-bg: #f8f9fa;
-    --primary-color: #28a745;
-    --shadow-color: rgba(0, 0, 0, 0.1);
-    --border-color: #e0e0e0;
-    --placeholder-bg: #e0e0e0;
-  }
+  /* Modo Claro (default) */
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --card-bg: #f8f9fa;
+  --primary-color: #28a745; /* Verde primario */
+  --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra estándar */
+  --border-color: #e0e0e0;
+  --placeholder-bg: #e0e0e0;
+  --primary-shadow: 0 4px 10px #28a745; 
+  --card-hover-bg: #ffffff; /* Fondo de tarjeta en hover (puede ser ligeramente diferente) */
   
-  .dark-mode {
-    /* Modo Oscuro */
-    --bg-color: #121212;
-    --text-color: #f8f9fa;
-    --card-bg: #1e1e1e;
-    --primary-color: #4caf50;
-    --shadow-color: rgba(0, 0, 0, 0.3);
-    --border-color: #333333;
-    --placeholder-bg: #333333;
-  }
-  
-  /* ======== Estilos Base ======== */
-  body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    transition: background-color 0.3s ease, color 0.3s ease;
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    line-height: 1.6;
-  }
-  
-  /* ======== Contenedor Principal ======== */
+  /* Añadir variables de transición/animación */
+  --transition-speed: 0.3s;
+  --animation-duration: 0.5s; 
+}
+
+.dark-mode {
+  /* Modo Oscuro */
+  --bg-color: #121212;
+  --text-color: #f8f9fa;
+  --card-bg: #1e1e1e;
+  --primary-color: #4caf50; 
+  --shadow-color: rgba(255, 255, 255, 0.1); 
+  --border-color: #333333;
+  --placeholder-bg: #333333;
+  --primary-shadow: 0 4px 10px #4caf50; 
+  --card-hover-bg: #2a2a2a; /* Fondo de tarjeta en hover oscuro */
+}
+
+/* ======== Animaciones ======== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* (Opcional) subtleBounce para foto */
+@keyframes subtleBounce {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50% { transform: scale(1.05) translateY(-4px); }
+}
+
+/* ======== Estilos Base ======== */
+*, *::before, *::after { 
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  /* Transiciones específicas */
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease; 
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+  line-height: 1.6;
+  font-size: 16px; 
+  overflow-x: hidden; 
+}
+
+/* ======== Contenedor Principal ======== */
+.profile-container {
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1rem; 
+  background-color: var(--bg-color); 
+  box-shadow: var(--primary-shadow); 
+  /* Transiciones específicas */
+  transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; 
+  /* Animación de entrada */
+  opacity: 0; 
+  animation: fadeIn var(--animation-duration) ease-out forwards;
+}
+
+/* ======== Títulos ======== */
+.profile-container h1 {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  margin-top: 0; 
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  text-align: center;
+}
+
+.profile-container h2 {
+  font-size: clamp(1.2rem, 4vw, 1.5rem);
+  margin: 1.5rem 0 1rem;
+  color: var(--text-color);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+  transition: border-color var(--transition-speed) ease; /* Añadir transición */
+}
+
+/* ======== Información de Usuario ======== */
+.user-info {
+  background: var(--card-bg);
+  padding: 1.25rem;
+  border-radius: 10px; /* Ligeramente más redondeado */
+  box-shadow: 0 2px 8px var(--shadow-color); 
+  margin-bottom: 1.5rem;
+  /* Transiciones específicas y añadir transform */
+  transition: background-color var(--transition-speed) ease, 
+              box-shadow var(--transition-speed) ease,
+              transform var(--transition-speed) ease;
+}
+
+/* Efecto Hover para la tarjeta de información */
+.user-info:hover {
+    transform: translateY(-5px); /* Elevar tarjeta */
+    box-shadow: 0 6px 16px var(--shadow-color); /* Sombra más pronunciada */
+}
+
+.user-info p {
+  margin: 0.75rem 0;
+  font-size: 1rem; 
+  text-align: left;
+  padding: 0 0.5rem;
+  overflow-wrap: break-word; 
+  word-break: break-word; 
+}
+
+.user-info strong {
+  display: inline-block; 
+  min-width: 80px; 
+  color: var(--primary-color);
+  font-weight: 600; 
+  margin-right: 0.5em; 
+}
+
+/* ======== Foto de Perfil ======== */
+.user-photo {
+  width: clamp(80px, 20vw, 120px); 
+  height: clamp(80px, 20vw, 120px);
+  margin: 0 auto 1.5rem; /* Más margen inferior */
+  border-radius: 50%;
+  overflow: hidden;
+  background-color: var(--placeholder-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid var(--border-color); /* Borde más grueso */
+  /* Transiciones específicas y añadir transform */
+  transition: background-color var(--transition-speed) ease, 
+              border-color var(--transition-speed) ease,
+              transform var(--transition-speed) ease,
+              box-shadow var(--transition-speed) ease; 
+  cursor: pointer; /* Indicar que es interactivo */
+}
+
+/* Efecto Hover para la foto */
+.user-photo:hover {
+    transform: scale(1.07); /* Escalar un poco */
+    box-shadow: 0 5px 15px var(--shadow-color); /* Añadir sombra */
+    border-color: var(--primary-color); /* Cambiar color de borde */
+    /* Opcional: animación bounce */
+    /* animation: subtleBounce 0.6s ease; */
+}
+
+
+.user-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block; 
+}
+
+.photo-placeholder {
+  font-size: clamp(2rem, 8vw, 3rem);
+  color: rgba(var(--text-color-rgb, 0, 0, 0), 0.5); 
+  background-color: var(--placeholder-bg); 
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  /* Transiciones específicas */
+  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+/* ======== Historial de Compras ======== */
+.profile-container ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.profile-container li {
+  background-color: var(--card-bg);
+  padding: 0.85rem 1.25rem; /* Ajustar padding */
+  margin-bottom: 0.75rem; /* Más espacio entre items */
+  border-radius: 8px; /* Redondeo consistente */
+  text-align: left;
+  font-size: 0.95rem;
+  box-shadow: 0 1px 4px var(--shadow-color); /* Sombra un poco más definida */
+  display: flex;
+  justify-content: space-between;
+  align-items: center; 
+  flex-wrap: wrap; 
+  gap: 0.5rem; 
+  /* Transiciones específicas y añadir transform */
+  transition: background-color var(--transition-speed) ease, 
+              box-shadow var(--transition-speed) ease,
+              transform var(--transition-speed) ease;
+  overflow-wrap: break-word; 
+  word-break: break-word;
+  cursor: default; /* Cambiar cursor si no son clickables */
+}
+
+/* Efecto Hover para los items de la lista */
+.profile-container li:hover {
+    transform: translateY(-3px) scale(1.01); /* Elevar y escalar ligeramente */
+    box-shadow: 0 5px 12px var(--shadow-color); /* Sombra más pronunciada */
+    background-color: var(--card-hover-bg); /* Fondo de hover (definido en :root) */
+}
+
+.profile-container li span {
+  color: var(--primary-color);
+  font-weight: 500; 
+}
+
+/* ======== Media Queries (Sin cambios, ya eran robustas) ======== */
+
+/* Estilos para pantallas más grandes (tabletas/escritorio pequeño) */
+@media (min-width: 600px) {
   .profile-container {
-    max-width: 100%;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1rem;
-    box-sizing: border-box;
-    background-color: var(--bg-color);
-    transition: all 0.3s ease;
+    max-width: 600px; 
+    padding: 1.5rem;
+    margin: 1.5rem auto; 
+    border-radius: 12px; /* Aumentar redondeo en desktop */
   }
   
-  /* ======== Títulos ======== */
-  .profile-container h1 {
-    font-size: clamp(1.5rem, 5vw, 2rem);
-    margin-bottom: 1.5rem;
-    color: var(--text-color);
-    text-align: center;
-  }
-  
-  .profile-container h2 {
-    font-size: clamp(1.2rem, 4vw, 1.5rem);
-    margin: 1.5rem 0 1rem;
-    color: var(--text-color);
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 0.5rem;
-  }
-  
-  /* ======== Información de Usuario ======== */
   .user-info {
-    background: var(--card-bg);
-    padding: 1.25rem;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 8px var(--shadow-color);
-    margin-bottom: 1.5rem;
-    transition: all 0.3s ease;
-  }
-  
-  .user-info p {
-    margin: 0.75rem 0;
-    font-size: 1rem;
-    text-align: left;
-    padding: 0 0.5rem;
-  }
-  
-  .user-info strong {
-    display: inline-block;
-    min-width: 80px;
-    color: var(--primary-color);
-  }
-  
-  /* ======== Foto de Perfil ======== */
-  .user-photo {
-    width: clamp(80px, 25vw, 120px);
-    height: clamp(80px, 25vw, 120px);
-    margin: 0 auto 1rem;
-    border-radius: 50%;
-    overflow: hidden;
-    background-color: var(--placeholder-bg);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-  }
-  
-  .user-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .photo-placeholder {
-    font-size: clamp(2rem, 8vw, 3rem);
-    color: white;
-    background-color: var(--placeholder-bg);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-  }
-  
-  /* ======== Historial de Compras ======== */
-  .profile-container ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    padding: 1.5rem;
+    border-radius: 12px; /* Aumentar redondeo */
   }
   
   .profile-container li {
-    background-color: var(--card-bg);
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 0.25rem;
-    text-align: left;
-    font-size: 0.95rem;
-    box-shadow: 0 1px 3px var(--shadow-color);
-    display: flex;
-    justify-content: space-between;
-    transition: all 0.3s ease;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 10px; /* Aumentar redondeo */
+  }
+}
+
+/* Ajustes para pantallas más pequeñas (móviles) */
+@media (max-width: 400px) {
+  body {
+      font-size: 15px; 
+  }
+    
+  .user-info p {
+    font-size: 0.9rem; 
+    padding: 0; 
   }
   
-  .profile-container li span {
-    color: var(--primary-color);
+  .profile-container li {
+    flex-direction: column; 
+    align-items: flex-start; 
+    gap: 0.25rem;
+    font-size: 0.9rem; 
   }
   
-  /* ======== Media Queries ======== */
-  @media (min-width: 600px) {
-    .profile-container {
-      max-width: 600px;
-      padding: 1.5rem;
-      margin: 1rem auto;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 10px var(--shadow-color);
-    }
-    
-    .user-info {
-      padding: 1.5rem;
-    }
-    
-    .profile-container li {
-      padding: 1rem;
-      font-size: 1rem;
-    }
+  .user-info strong {
+    display: block; 
+    margin-bottom: 0.25rem;
+    min-width: 0; 
   }
-  
-  @media (max-width: 400px) {
-    .user-info p {
-      font-size: 0.9rem;
-    }
-    
-    .profile-container li {
-      flex-direction: column;
-      gap: 0.25rem;
-    }
-    
-    .user-info strong {
-      display: block;
-      margin-bottom: 0.25rem;
-    }
+}
+
+/* Ajustes para pantallas MUY pequeñas (< 280px) */
+@media (max-width: 280px) {
+  body {
+      font-size: 14px; 
+      line-height: 1.5; 
   }
+    
+  .profile-container {
+      padding: 0.75rem 0.5rem; 
+      box-shadow: none; 
+      border: 1px solid var(--border-color); /* Añadir borde si se quita sombra */
+      margin: 0; /* Ocupar todo el ancho sin margen */
+      border-radius: 0; /* Sin redondeo en pantallas tan pequeñas */
+  }
+
+  .profile-container h1 {
+      font-size: 1.2rem; 
+      margin-bottom: 1rem;
+  }
+    
+  .profile-container h2 {
+      font-size: 1rem; 
+      margin: 1rem 0 0.75rem;
+  }
+    
+  .user-info {
+      padding: 0.75rem; 
+      border-radius: 6px; /* Menos redondeo */
+  }
+    
+  .user-photo {
+      width: 60px; 
+      height: 60px;
+      border-width: 2px; /* Borde más fino */
+  }
+    
+  .photo-placeholder {
+      font-size: 1.5rem; 
+  }
+
+  .profile-container li {
+      padding: 0.5rem 0.75rem; 
+      font-size: 0.85rem; 
+      border-radius: 6px; /* Menos redondeo */
+      margin-bottom: 0.5rem;
+  }
+}

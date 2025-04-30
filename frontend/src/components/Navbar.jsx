@@ -59,10 +59,11 @@ const Navbar = () => {
 
                 <div className="desktop-menu">
                     <ul className="nav-links">
-                        <li><Link to="/products" onClick={closeAll}>Productos</Link></li>
+                        <li><Link to="/wishlist" onClick={closeAll}>Wishlist</Link></li>
                         <li><Link to="/cart" onClick={closeAll}>Carrito</Link></li>
                         <li><Link to="/login" onClick={closeAll}>Iniciar Sesión</Link></li>
                         <li><Link to="/UserProfile" onClick={closeAll}>Mi Perfil</Link></li>
+                        <li><Link to="/admin" onClick={closeAll}>Admin</Link></li>
                     </ul>
                     <button 
                         className="theme-toggle" 
@@ -97,10 +98,11 @@ const Navbar = () => {
                 onClick={(e) => e.target.tagName === 'A' && closeAll()}
             >
                 <ul className="mobile-nav-links">
-                    <li><Link to="/products" onClick={closeAll}>Productos</Link></li>
+                    <li><Link to="/wishlist" onClick={closeAll}>Wishlist</Link></li>
                     <li><Link to="/cart" onClick={closeAll}>Carrito</Link></li>
                     <li><Link to="/login" onClick={closeAll}>Iniciar Sesión</Link></li>
                     <li><Link to="/UserProfile" onClick={closeAll}>Mi Perfil</Link></li>
+                    <li><Link to="/admin" onClick={closeAll}>Admin</Link></li>
                     <li>
                         <button 
                             className="theme-toggle mobile-theme" 

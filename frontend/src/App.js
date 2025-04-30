@@ -9,6 +9,9 @@ import CartPage from './pages/CartPage';
 import { CheckoutPage } from './pages/CheckoutPage';
 import HomePage from './pages/HomePage';
 import UserProfile from './pages/UserProfile';
+import AdminPages from './pages/AdminPages';
+import ProductDetailPage from './pages/ProductDetailPage';
+import WishListPage from './pages/WishListPage';
 
 function App() {
     return (
@@ -21,6 +24,9 @@ function App() {
                     <Route path='/login' element={<Login/>}/>{/*Ruta para el login*/}
                     <Route path="/cart" element={<CartPage />} /> {/* Ruta para el carrito */}
                     <Route path="/checkout" element={<CheckoutPage />} />
+                    <Route path="/admin" element={<AdminPages />} />
+                    <Route path="/wishlist" element={<WishListPage />} />
+                    <Route path="/product/:id" element={<ProductDetailPage />} />
                 </Routes>
             </div>
         </Router>

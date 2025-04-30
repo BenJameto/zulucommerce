@@ -1,30 +1,262 @@
+/* frontend/src/pages/CheckoutPage.css */
+
+/* ======== Variables CSS (Sin Cambios) ======== */
+:root {
+  /* ... (variables como estaban antes) ... */
+  --primary-color: #FFA41C; 
+  --primary-hover: #FF8C00; 
+  --primary-rgb: 255, 164, 28; 
+  --success-color: #28a745; 
+  --error-color: #D83121; 
+  --link-color: #007185; 
+  --link-hover: var(--primary-color);
+  --bg-color: #f8f9fa; 
+  --card-bg: #ffffff; 
+  --input-bg: #ffffff; 
+  --text-color: #111111; 
+  --text-secondary: #555555; 
+  --border-color: #e0e0e0; /* Borde más suave */
+  --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); 
+  --card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.15); 
+  --button-shadow: 0 3px 8px rgba(var(--primary-rgb), 0.3); 
+  --input-focus-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2); 
+  --border-radius: 12px; 
+  --border-radius-small: 8px; 
+  --transition-speed: 0.3s;
+  --animation-duration: 0.5s;
+  --navbar-height: 70px; 
+}
+
+/* ======== Modo Oscuro (Sin Cambios) ======== */
+.dark-mode {
+  /* ... (variables dark como estaban antes) ... */
+  --bg-color: #1a1a1a; 
+  --card-bg: #2d2d2d; 
+  --input-bg: #333333; 
+  --text-color: #f0f0f0; 
+  --text-secondary: #aaa; 
+  --border-color: #444; /* Borde oscuro */
+  --link-color: #17a2b8; 
+  --link-hover: var(--primary-color);
+  --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+  --card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.6);
+  --button-shadow: 0 3px 8px rgba(var(--primary-rgb), 0.4);
+  --input-focus-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+}
+
+/* ======== Animaciones (Sin Cambios) ======== */
+@keyframes fadeIn { /* ... */ }
+@keyframes pulse { /* ... */ }
+
+/* ======== Estilo general de la página ======== */
 .checkout-container {
-    max-width: 600px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: var(--bg-color);
-    box-shadow: 0 4px 10px #28a745;
-    border-radius: 8px ;
-  }
-  
-  .form-group {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: flex-start; 
+  align-items: center; 
+  min-height: calc(100vh - var(--navbar-height, 70px)); 
+  background-color: var(--bg-color);
+  padding: clamp(1rem, 5vw, 2rem); 
+  box-sizing: border-box; 
+  opacity: 0; 
+  animation: fadeIn var(--animation-duration) ease-out forwards;
+}
+
+/* ======== NUEVO: Caja/Tarjeta para el Contenido ======== */
+.checkout-card { 
+  background-color: var(--card-bg);
+  box-shadow: var(--card-shadow); 
+  padding: clamp(1.5rem, 5vw, 3rem); /* Más padding interno */
+  border-radius: var(--border-radius); 
+  width: 100%;
+  max-width: 650px; 
+  box-sizing: border-box;
+  border: 1px solid var(--border-color); /* Borde sutil añadido */
+  transition: background-color var(--transition-speed) ease, 
+              box-shadow var(--transition-speed) ease,
+              border-color var(--transition-speed) ease,
+              transform var(--transition-speed) ease; /* Añadir transform a transición */
+}
+.checkout-card:hover {
+    /* transform: translateY(-3px); /* Sutil elevación opcional */
+    box-shadow: var(--card-shadow-hover);
+}
+
+
+/* Título (Ahora dentro de la tarjeta) */
+.checkout-title {
+    font-size: clamp(1.6rem, 5vw, 2rem);
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 2.5rem; /* Más espacio debajo */
+    text-align: center;
+    color: var(--text-color);
+    border-bottom: 1px solid var(--border-color); /* Línea separadora */
+    padding-bottom: 1rem; /* Espacio para la línea */
+}
+
+/* Estilo del formulario */
+.checkout-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espacio entre fieldsets */
+}
+
+/* ======== NUEVO: Estilo para Fieldset y Legend ======== */
+.form-group { /* Ahora es un fieldset */
+  border: none; /* Quitar borde por defecto de fieldset */
+  padding: 0; 
+  margin: 0; 
+  /* Opcional: Añadir un borde superior para separar secciones */
+  border-top: 1px solid var(--border-color);
+  padding-top: 1.5rem; 
+}
+.checkout-form .form-group:first-of-type {
+    border-top: none; /* No poner borde en el primer grupo */
+    padding-top: 0;
+}
+
+.form-group legend {
+  font-size: 1.1rem; /* Tamaño leyenda */
+  font-weight: 600;
+  color: var(--primary-color); /* Color primario para leyenda */
+  padding: 0 0.5em; /* Espacio alrededor del texto */
+  margin-left: 0; /* Alinear a la izquierda */
+  margin-bottom: 1rem; /* Espacio debajo de la leyenda */
+  border: none; /* Asegurar que no haya borde */
+}
+
+/* Espacio entre label/input dentro del fieldset */
+.form-group > div {
     margin-bottom: 1rem;
-  }
-  
-  form input, form select {
-    width: 100%;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    background-color: var(--bg-color)
-  }
-  
-  button {
-    background-color: #28a745;
-    color: #fff;
-    padding: 0.75rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
+}
+.form-group > div:last-child {
+    margin-bottom: 0; /* Quitar margen al último elemento del grupo */
+}
+
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem; 
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Estilo de Inputs y Selects (Sin Cambios) */
+.checkout-form input[type="text"],
+.checkout-form input[type="email"],
+.checkout-form input[type="tel"],
+.checkout-form input[type="number"],
+.checkout-form input[type="password"],
+.checkout-form select {
+  width: 100%;
+  padding: 0.85rem 1rem; 
+  border: 1px solid var(--border-color); 
+  border-radius: var(--border-radius-small); 
+  background-color: var(--input-bg); 
+  color: var(--text-color); 
+  font-size: 1rem; 
+  transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  box-sizing: border-box;
+}
+
+.checkout-form select {
+    appearance: none; 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23555555%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+    background-repeat: no-repeat;
+    background-position: right 0.7em top 50%, 0 0;
+    background-size: 0.65em auto, 100%;
+    padding-right: 2.5em; 
+}
+.dark-mode .checkout-form select {
+     background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23AAAAAA%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E');
+}
+
+.checkout-form input::placeholder,
+.checkout-form select:invalid { 
+    color: var(--text-secondary);
+    opacity: 0.7;
+}
+
+.checkout-form input:focus,
+.checkout-form select:focus {
+  outline: none; 
+  border-color: var(--primary-color); 
+  box-shadow: var(--input-focus-shadow); 
+}
+
+/* Estilo del Botón de Checkout/Submit (Sin Cambios) */
+.checkout-submit-btn { 
+  background-color: var(--primary-color); 
+  color: #fff;
+  padding: 0.9rem 1rem; 
+  border: none;
+  border-radius: var(--border-radius-small); 
+  cursor: pointer;
+  font-size: 1.05rem; 
+  font-weight: 600;
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  margin-top: 1.5rem; /* Más margen arriba del botón final */
+  width: 100%; 
+  -webkit-tap-highlight-color: transparent;
+}
+
+.checkout-submit-btn:hover {
+  background-color: var(--primary-hover); 
+  transform: translateY(-3px); 
+  box-shadow: var(--button-shadow); 
+  animation: pulse 1.5s infinite ease-out; 
+}
+
+.checkout-submit-btn:active {
+  transform: translateY(0);
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); 
+  animation: none; 
+}
+
+/* Media Queries para Responsividad (Ajustes menores) */
+@media (max-width: 700px) { 
+    .checkout-card { /* Aplicar a la tarjeta interna */
+        margin: 1rem; 
+        padding: 1.5rem; 
+        max-width: calc(100% - 2rem); 
+    }
+    .checkout-title {
+        font-size: 1.6rem; 
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.8rem; /* Ajustar padding */
+    }
+    .checkout-form {
+        gap: 1.25rem; /* Mantener gap o reducir ligeramente */
+    }
+    .form-group legend {
+        font-size: 1rem; /* Reducir leyenda */
+    }
+}
+
+@media (max-width: 480px) {
+    .checkout-card {
+        padding: 1.2rem; /* Reducir padding */
+        margin: 0.5rem;
+        max-width: calc(100% - 1rem);
+        border-radius: var(--border-radius-small); 
+    }
+    .checkout-title {
+        font-size: 1.4rem;
+    }
+     .checkout-form input, .checkout-form select {
+        padding: 0.8rem 0.9rem;
+        font-size: 0.95rem;
+     }
+      .checkout-submit-btn {
+        padding: 0.8rem;
+        font-size: 1rem;
+    }
+    .form-group legend {
+        font-size: 0.95rem;
+    }
+}
