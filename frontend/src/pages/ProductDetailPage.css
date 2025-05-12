@@ -197,7 +197,7 @@
   font-weight: 500;
 }
 
-/* ======== Botones ======== */
+/* ======== Botones Unificados ======== */
 .action-buttons {
   display: flex;
   gap: clamp(10px, 2vw, 15px);
@@ -206,7 +206,8 @@
 }
 
 .add-to-cart-btn,
-.buy-now-btn {
+.buy-now-btn,
+.add-to-wishlist-btn {
   padding: clamp(12px, 2vw, 14px) clamp(20px, 3vw, 28px);
   color: #fff;
   border: none;
@@ -220,36 +221,23 @@
   text-align: center;
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
   -webkit-tap-highlight-color: transparent;
-}
-
-.add-to-cart-btn {
   background-color: var(--primary-color);
 }
 
-.add-to-cart-btn:hover {
+.add-to-cart-btn:hover,
+.buy-now-btn:hover,
+.add-to-wishlist-btn:hover {
   background-color: var(--primary-hover);
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(255, 164, 28, 0.4);
   animation: pulse 1s infinite;
 }
 
-.add-to-cart-btn:active {
+.add-to-cart-btn:active,
+.buy-now-btn:active,
+.add-to-wishlist-btn:active {
   transform: translateY(0);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.buy-now-btn {
-  background-color: var(--price-color);
-}
-
-.buy-now-btn:hover {
-  background-color: #9a1f04;
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(177, 39, 4, 0.4);
-}
-
-.buy-now-btn:active {
-  transform: translateY(0);
 }
 
 /* ======== Sección de Información ======== */
@@ -428,7 +416,9 @@
     transform: translateY(-2px);
   }
   
-  .add-to-cart-btn:hover {
+  .add-to-cart-btn:hover,
+  .buy-now-btn:hover,
+  .add-to-wishlist-btn:hover {
     animation: none;
     box-shadow: 0 4px 8px rgba(255, 164, 28, 0.3);
   }
@@ -481,7 +471,8 @@
   }
   
   .add-to-cart-btn,
-  .buy-now-btn {
+  .buy-now-btn,
+  .add-to-wishlist-btn {
     font-size: 1rem;
     padding: 12px 15px;
   }
@@ -497,6 +488,7 @@
     font-size: 0.95rem;
   }
 }
+
 /* ======== Ajustes específicos para contenedores en pantallas <260px ======== */
 @media (max-width: 260px) {
   .product-detail-container {
@@ -550,7 +542,8 @@
   }
 
   .add-to-cart-btn,
-  .buy-now-btn {
+  .buy-now-btn,
+  .add-to-wishlist-btn {
     padding: 6px 8px;
     font-size: 0.75rem;
     min-width: 100%;
@@ -616,6 +609,7 @@
     font-size: 0.8rem;
   }
 }
+
 /* ======== Ajustes ultra extremos (110px - 260px) ======== */
 @media (max-width: 260px) {
   .product-detail-container {
@@ -683,7 +677,8 @@
   }
 
   .add-to-cart-btn,
-  .buy-now-btn {
+  .buy-now-btn,
+  .add-to-wishlist-btn {
     padding: 3px 5px;
     font-size: 0.5rem;
     border-radius: 4px;
