@@ -1,2 +1,3 @@
 *.pdf
 k3s.yaml
+node_modules/
