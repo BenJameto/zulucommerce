@@ -273,11 +273,4 @@ body { /* Aplicar color de fondo base al body */
       height: 80px; /* Imagen mínima */
   }
 }
-  /* ======== Clase eliminada (no usada en tu JSX) ======== */
-  /*
-  .products-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 10px;
-  }
-  */
+ 

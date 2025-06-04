@@ -20,7 +20,6 @@ app.use(express.json({
   }
 }));
 
-
 // Rutas base
 app.get('/', (req, res) => {
   res.send('Auth Service is running ✅');

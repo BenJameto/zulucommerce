@@ -1,184 +1,119 @@
-// frontend/src/pages/ProductDetailPage.js
-import React, { useState } from 'react';
-import './ProductDetailPage.css'; // Asegúrate de importar el CSS final
+// frontend/src/pages/ProductDetailPage.jsx
+import React, { useState, useEffect } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import './ProductDetailPage.css'; // Asegúrate que este archivo exista
 
-function ProductDetailPage() {
-  // Datos simulados de producto (sin cambios)
-  const product = {
-    id: 1,
-    name: 'Sony WH-1000XM5 Audífonos Inalámbricos',
-    brand: 'Sony',
-    price: 5999.00, // Usar .00 para claridad
-    rating: 4.7,
-    reviewsCount: 16537,
-    images: [
-      'https://http2.mlstatic.com/D_NQ_NP_620187-MLU69726815032_052023-O.webp',
-      'https://mobomx.vtexassets.com/arquivos/ids/196876-800-auto?v=638212067600330000&width=800&height=auto&aspect=true',
-      'https://perfectchoice.me/cdn/shop/files/V-930051001_600x.png?v=1692040449',
-      // Añadir más imágenes si quieres que se muestren como thumbnails
-    ],
-    description: 'Estos audífonos ofrecen cancelación de ruido avanzada, diseño ergonómico y una experiencia de sonido envolvente.',
-    specs: {
-      'Tipo de conexión': 'Inalámbrico',
-      'Cancelación de ruido': 'Activa',
-      'Marca': 'Sony',
-      'Color': 'Negro',
-      'Peso': '250 gramos',
-      'Compatibilidad': 'Bluetooth 5.0',
-      'Duración Batería': 'Hasta 30 horas (con NC)',
-    },
-    reviews: [
-      {
-        user: 'Juan Pérez',
-        title: 'Excelentes audífonos',
-        comment: 'La cancelación de ruido es impresionante, la calidad de sonido es clara y equilibrada.',
-        rating: 5,
-        date: '2025-04-15', // Añadir fecha opcional
-      },
-      {
-        user: 'Ana Gómez',
-        title: 'Muy buenos, pero caros',
-        comment: 'El precio es un poco alto, pero vale la pena por la calidad de sonido y la duración de la batería.',
-        rating: 4,
-        date: '2025-04-10', // Añadir fecha opcional
-      },
-    ],
-    inStock: true, // Añadir estado de stock
+const handleAddToCart = (product, quantity) => {
+  console.log(`Añadido al carrito: ${quantity} x ${product.name} (ID: ${product.id})`);
+  alert(`${quantity} x ${product.name} añadido al carrito!`);
+};
+const handleAddToWishlist = (product) => {
+  console.log(`Añadido a lista de deseos: ${product.name} (ID: ${product.id})`);
+  alert(`${product.name} añadido a la lista de deseos!`);
+};
+
+const ProductDetailPage = () => {
+  const { productId } = useParams();
+  const [product, setProduct] = useState(null);
+  const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true);
+    setError(null);
+    // SIMULACIÓN DE FETCH: Reemplaza esto con tu fetch real
+    setTimeout(() => {
+      const exampleProducts = [
+        { id: "1", name: "Botella de Agua Ecológica", price: 20.00, image: "https://m.media-amazon.com/images/I/61CQachvmqL.jpg", description: "Botella de agua reutilizable hecha con materiales reciclados, perfecta para mantener tus bebidas frías o calientes.", stock: 15, category: "Accesorios" },
+        { id: "2", name: "Sony WH-1000XM5 Audífonos", price: 5999.00, image: "https://http2.mlstatic.com/D_NQ_NP_620187-MLU69726815032_052023-O.webp", description: "Experimenta la cancelación de ruido líder en la industria con estos audífonos inalámbricos de alta calidad.", stock: 5, category: "Electrónicos" },
+        { id: "3", name: "Camiseta Orgánica", price: 29.99, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=500', description: "Camiseta cómoda y suave hecha de algodón 100% orgánico.", stock: 3, category: "Ropa" },
+        // ... añade más productos que coincidan con los IDs que usas en la Home
+      ];
+      const foundProduct = exampleProducts.find(p => p.id.toString() === productId);
+      if (foundProduct) {
+        setProduct(foundProduct);
+      } else {
+        setError("Producto no encontrado.");
+      }
+      setLoading(false);
+    }, 1000);
+  }, [productId]);
+
+  const handleQuantityChange = (amount) => {
+    setQuantity(prevQuantity => {
+      const newQuantity = prevQuantity + amount;
+      if (newQuantity < 1) return 1;
+      if (product && newQuantity > product.stock) return product.stock;
+      return newQuantity;
+    });
   };
 
-  const [selectedImage, setSelectedImage] = useState(product.images[0]);
-
-  // Funciones Handler (Simuladas)
-  const handleAddToCart = () => {
-    alert(`¡Producto agregado al carrito: ${product.name}!`);
-    // Lógica real de añadir al carrito (API call, state update)
-  };
-
-  const handleAddToWishlist = () => {
-    alert(`¡Producto agregado a la lista de deseos: ${product.name}!`);
-    // Lógica real de añadir a wishlist (API call, state update)
-  };
-
-  const handleBuyNow = () => {
-    alert(`Iniciando compra inmediata para: ${product.name}!`);
-     // Lógica real de compra inmediata (redirigir a checkout con el item?)
-  }
+  if (loading) return <div className="product-detail-status">Cargando producto...</div>;
+  if (error) return <div className="product-detail-status product-detail-error">{error} <Link to="/">Volver a la tienda</Link></div>;
+  if (!product) return <div className="product-detail-status">Producto no disponible. <Link to="/">Volver a la tienda</Link></div>;
 
   return (
     <div className="product-detail-container">
-      {/* Sección superior: imágenes y datos principales */}
-      <div className="top-section">
-        {/* Galería de Imágenes */}
-        <div className="image-gallery">
-          <div className="main-image">
-            <img src={selectedImage} alt={product.name} />
-          </div>
-          <div className="thumbnail-list">
-            {product.images.map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`Thumbnail ${index + 1}`}
-                onClick={() => setSelectedImage(img)}
-                className={selectedImage === img ? 'thumbnail active' : 'thumbnail'}
-              />
-            ))}
-          </div>
+      <button onClick={() => navigate(-1)} className="btn btn--secondary btn--back">
+        &larr; Volver
+      </button>
+      <div className="product-detail-card">
+        <div className="product-detail__image-gallery">
+          <img src={product.image} alt={product.name} className="product-detail__main-image" />
         </div>
-
-        {/* Resumen del Producto */}
-        <div className="product-summary">
-          <p className="brand">Marca: {product.brand}</p>
-          <h1>{product.name}</h1>
-          
-          <div className="rating-container">
-            <span className="rating">{product.rating} ★</span>
-            {/* Enlace simulado a reviews */}
-            <a href="#reviews-section" className="reviews-count">({product.reviewsCount} opiniones)</a> 
+        <div className="product-detail__info">
+          <h1 className="product-detail__name">{product.name}</h1>
+          <p className="product-detail__category">Categoría: <Link to={`/shop?category=${encodeURIComponent(product.category)}`}>{product.category}</Link></p>
+          <p className="product-detail__price">${product.price.toFixed(2)}</p>
+          <p 
+            className="product-detail__stock" 
+            style={{color: product.stock > 0 ? (product.stock < 5 ? 'var(--error-color)' : 'var(--success-color)') : 'var(--error-color)'}}
+          >
+            {product.stock > 0 ? `${product.stock} unidades disponibles` : "Agotado"}
+            {product.stock > 0 && product.stock < 5 && " (¡Últimas unidades!)"}
+          </p>
+          <div className="product-detail__description">
+            <h3>Descripción</h3>
+            <p>{product.description}</p>
           </div>
-
-          <div className="price-container">
-              <span className="price">$ {product.price.toLocaleString('es-MX', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
-              {/* Podrías añadir precio anterior o descuento aquí si aplica */}
-              {/* <span className="discount-badge">-15%</span> */}
-          </div>
-
-          {product.inStock ? (
-            <p className="stock-status in-stock">Disponible</p>
-          ) : (
-            <p className="stock-status out-of-stock">Agotado</p>
-          )}
-
-          {/* Contenedor para botones de acción */}
-          <div className="action-buttons"> 
-            <button 
-              className="add-to-cart-btn" // Botón primario
-              onClick={handleAddToCart}
-              disabled={!product.inStock}
-            >
-              Agregar al Carrito
-            </button>
-            {/* NUEVO BOTÓN: Agregar a Wishlist (Secundario) */}
-            <button 
-              className="add-to-wishlist-btn" // Botón secundario
-              onClick={handleAddToWishlist}
-            >
-              Agregar a Wishlist
-            </button>
-            {/* Botón opcional Compra Rápida */}
-             <button 
-              className="buy-now-btn" // Estilo diferente (ej. más oscuro/rojo)
-              onClick={handleBuyNow}
-              disabled={!product.inStock}
-            >
-              Comprar Ahora
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {/* Sección de descripción y especificaciones */}
-      <div className="info-section">
-        <div className="description">
-          <h2>Descripción del producto</h2>
-          <p>{product.description}</p>
-        </div>
-        <div className="specs">
-          <h2>Información del producto</h2>
-          <ul>
-            {/* Mapeo mejorado para specs */}
-            {Object.entries(product.specs).map(([key, value]) => (
-              <li key={key}>
-                <strong>{key}:</strong> <span>{value}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      {/* Sección de opiniones (reviews) */}
-      <div id="reviews-section" className="reviews-section"> {/* Añadido ID para enlace */}
-        <h2>Opiniones de Clientes</h2>
-        {product.reviews.length > 0 ? (
-            product.reviews.map((review, index) => (
-              <div className="review" key={index}>
-                <div className="review-header">
-                    <h3 title={review.title}>{review.title}</h3>
-                    <span className="rating">{review.rating} ★</span>
-                </div>
-                <p className="user">
-                  Por <strong>{review.user}</strong> 
-                  {review.date && <span className="date"> el {new Date(review.date).toLocaleDateString('es-MX')}</span>} 
-                </p>
-                <p className="comment">{review.comment}</p>
+          {product.stock > 0 && (
+            <div className="product-detail__purchase-options">
+              <div className="quantity-selector">
+                <label htmlFor={`quantity-${product.id}`}>Cantidad:</label>
+                <button onClick={() => handleQuantityChange(-1)} disabled={quantity <= 1}>-</button>
+                <input 
+                  type="number" 
+                  id={`quantity-${product.id}`}
+                  value={quantity} 
+                  min="1" 
+                  max={product.stock}
+                  onChange={(e) => setQuantity(Math.max(1, Math.min(parseInt(e.target.value,10) || 1, product.stock) ))}
+                />
+                <button onClick={() => handleQuantityChange(1)} disabled={quantity >= product.stock}>+</button>
               </div>
-            ))
-        ) : (
-            <p>Aún no hay opiniones para este producto.</p>
-        )}
+              <button 
+                className="btn btn--primary btn--add-to-cart-detail"
+                onClick={() => handleAddToCart(product, quantity)}
+              >
+                Añadir al Carrito
+              </button>
+            </div>
+          )}
+          <div className="product-detail__actions">
+            <button 
+              className="btn btn--icon btn--wishlist-detail" // Asegúrate que .btn--icon esté definido globalmente o en este CSS
+              onClick={() => handleAddToWishlist(product)}
+              title="Añadir a Lista de Deseos"
+            >
+              ❤️ Añadir a Deseos
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default ProductDetailPage;

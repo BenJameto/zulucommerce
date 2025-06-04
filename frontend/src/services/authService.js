@@ -25,7 +25,7 @@ export const register = async ({ email, username, password }) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email: email, // lo tomamos como email para esta prueba
+      email,
       username,
       password,
     }),

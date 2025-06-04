@@ -1,32 +1,35 @@
-
+// frontend/src/App.js
 
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import './App.css';
+import './App.css'; // Asegúrate que este archivo contiene tus variables CSS globales y estilos base
+
+// Verifica CADA UNA de estas importaciones contra las exportaciones en los archivos correspondientes:
 import Navbar from './components/Navbar';
-import Login from './pages/login';
-import CartPage from './pages/CartPage'; 
-import { CheckoutPage } from './pages/CheckoutPage';
+import Login from './pages/login'; // ¿Es 'login.jsx' o 'Login.jsx'? La consistencia en nombres ayuda.
+import CartPage from './pages/CartPage';
+import { CheckoutPage } from './pages/CheckoutPage'; // REQUIERE: export const CheckoutPage en CheckoutPage.jsx
 import HomePage from './pages/HomePage';
 import UserProfile from './pages/UserProfile';
-import AdminPages from './pages/AdminPages';
+import AdminPages from './pages/AdminPages'; // ¿Es 'AdminPages.jsx' o 'AdminPage.jsx'? (Visto como AdminPage.jsx antes)
 import ProductDetailPage from './pages/ProductDetailPage';
 import WishListPage from './pages/WishListPage';
 
 function App() {
     return (
-        <Router> {/* Envuelve tu aplicación con Router */}
+        <Router>
             <div className="App">
-                <Navbar/>{/*mandamos a traer la barra de navegacion */}
-                <Routes> {/* Envuelve tus rutas con Routes */}
-                    <Route path="/" element={<HomePage />} /> {/* Ruta para el inicio */}
-                    <Route path="/userprofile" element={<UserProfile/>}/>{/*Ruta perfil de usuario*/} 
-                    <Route path='/login' element={<Login/>}/>{/*Ruta para el login*/}
-                    <Route path="/cart" element={<CartPage />} /> {/* Ruta para el carrito */}
+                <Navbar />
+                <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route path="/userprofile" element={<UserProfile />}/>
+                    <Route path='/login' element={<Login />}/>
+                    <Route path="/cart" element={<CartPage />} />
                     <Route path="/checkout" element={<CheckoutPage />} />
-                    <Route path="/admin" element={<AdminPages />} />
+                    <Route path="/admin" element={<AdminPages />} /> {/* Asegúrate que 'AdminPages' sea el componente correcto */}
                     <Route path="/wishlist" element={<WishListPage />} />
-                    <Route path="/product/:id" element={<ProductDetailPage />} />
+                    {/* La ruta para ProductDetailPage usualmente incluye un parámetro como productId */}
+                    <Route path="/product/:productId" element={<ProductDetailPage />} /> 
                 </Routes>
             </div>
         </Router>
