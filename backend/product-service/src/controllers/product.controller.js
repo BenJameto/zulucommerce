@@ -1,24 +1,66 @@
-// "Base de datos" en memoria
-let products = [
-    { id: 1, name: "Botella de agua", price: 20.00, image: "https://m.media-amazon.com/images/I/61CQachvmqL.jpg" },
-    { id: 2, name: "Sony WH-1000XM5 Audífonos Inalámbricos", price: 5999, image: 'https://http2.mlstatic.com/D_NQ_NP_620187-MLU69726815032_052023-O.webp', },
-    { id: 3, name: "Camiseta Orgánica", price: 29.99, image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&q=80&w=500' },
-    { id: 4, name: "Botella Ecológica", price: 24.99, image: 'https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&q=80&w=500' },
-    { id: 5, name: "Reusable Coffee Cup", price: 16.99, image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpjuPdKoQdZvx24XerVr8e8ufiuCeIBChpTw&s" },
-    { id: 6, name: "Botella de vino tinto", price: 42.99, image: "https://lacanasteria.com/wp-content/uploads/2023/03/Mucho-Mas-Black-Edition-750ML.jpg" }
-];
+const { Pool } = require('pg');
+require('dotenv').config();
+
+// Verificar que las variables de entorno estén cargadas
+console.log('Configuración de la base de datos:', {
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    database: process.env.DB_DATABASE,
+    // No mostramos la contraseña por seguridad
+    password: process.env.DB_PASSWORD ? '******' : 'No definida'
+});
+
+const pool = new Pool({
+    user: process.env.DB_USER || 'zulucommerce',
+    password: process.env.DB_PASSWORD || 'zulucommerce123',
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 5433,
+    database: process.env.DB_DATABASE || 'zulucommerce'
+});
+
+// Verificar conexión a la base de datos
+pool.connect((err, client, release) => {
+    if (err) {
+        console.error('❌ Error conectando a la base de datos:', err.stack);
+    } else {
+        console.log('✅ Conexión exitosa a la base de datos');
+        release();
+    }
+});
 
 // ✅ GET
-const getProducts = (req, res) => {
-    res.json(products);
+const getProducts = async (req, res) => {
+    try {
+        const result = await pool.query('SELECT id, name, CAST(price AS FLOAT) as price, image FROM products');
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'No se encontraron productos' });
+        }
+        res.json(result.rows);
+    } catch (error) {
+        console.error('❌ Error al obtener productos:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
 };
 
 // ✅ POST
-const addProduct = (req, res) => {
-    const { name, price, image } = req.body;
-    const newProduct = { id: products.length + 1, name, price, image };
-    products.push(newProduct);
-    res.status(201).json(newProduct);
+const addProduct = async (req, res) => {
+    try {
+        const { name, price, image } = req.body;
+        
+        if (!name || !price || !image) {
+            return res.status(400).json({ error: 'Todos los campos son requeridos' });
+        }
+
+        const result = await pool.query(
+            'INSERT INTO products (name, price, image) VALUES ($1, $2, $3) RETURNING id, name, CAST(price AS FLOAT) as price, image',
+            [name, price, image]
+        );
+        res.status(201).json(result.rows[0]);
+    } catch (error) {
+        console.error('❌ Error al agregar producto:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
 };
 
 // ✅ Exporta todo correctamente

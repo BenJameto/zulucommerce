@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: zulucommerce-postgres
+    environment:
+      POSTGRES_USER: zulucommerce
+      POSTGRES_PASSWORD: zulucommerce123
+      POSTGRES_DB: zulucommerce
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: 
