@@ -1,0 +1,229 @@
+/* frontend/src/pages/LoginPage.css (o como lo llames) */
+
+/* ======== Variables CSS (Consistentes con el resto de la app) ======== */
+:root {
+    /* Paleta Principal */
+    --primary-color: #FFA41C; 
+    --primary-hover: #FF8C00; 
+    --primary-rgb: 255, 164, 28; 
+    
+    /* Colores Funcionales */
+    --success-color: #28a745; 
+    --success-hover: #218838;
+    --success-rgb: 40, 167, 69; 
+    --error-color: #D83121; 
+    --error-hover: #a71b0e;
+    --error-rgb: 216, 49, 33; 
+    --link-color: #007185; /* Color de enlace tipo Amazon */
+    --link-hover: var(--primary-color); /* O usar --primary-color para hover */
+    
+    /* Colores Base */
+    --bg-color: #f8f9fa; 
+    --card-bg: #ffffff; 
+    --input-bg: #ffffff; /* Fondo específico para inputs */
+    --text-color: #111111; 
+    --text-secondary: #555555; 
+    --border-color: #d1d1d1; /* Borde ligeramente más visible para inputs */
+    
+    /* Sombras */
+    --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra de tarjeta un poco más pronunciada */
+    --card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.15); 
+    --button-shadow: 0 3px 8px rgba(var(--primary-rgb), 0.3); 
+    --input-focus-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.2); /* Sombra para input focus */
+    
+    /* Layout & Transiciones */
+    --border-radius: 10px; /* Mantener redondeo de 10px o 12px */
+    --border-radius-small: 6px; 
+    --transition-speed: 0.3s;
+    --animation-duration: 0.5s;
+    --navbar-height: 70px; /* Asumiendo altura de navbar */
+  }
+  
+  /* ======== Modo Oscuro (Asegúrate de tener estas variables definidas) ======== */
+  .dark-mode {
+    --bg-color: #1a1a1a; 
+    --card-bg: #2d2d2d; 
+    --input-bg: #333333; /* Fondo de input oscuro */
+    --text-color: #f0f0f0; 
+    --text-secondary: #aaa; 
+    --border-color: #555555; /* Borde oscuro más visible */
+    --link-color: #17a2b8; /* Ajustar color de link para dark mode */
+    --link-hover: var(--primary-color);
+  
+    --card-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    --card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.6);
+    --button-shadow: 0 3px 8px rgba(var(--primary-rgb), 0.4);
+    --input-focus-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.3);
+  }
+  
+  /* ======== Animaciones ======== */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  @keyframes pulse { 
+    0% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(var(--primary-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0); }
+  }
+  
+  /* ======== Estilo general de la página ======== */
+  .login-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      /* Asegurar que ocupe al menos la altura visible menos la navbar */
+      min-height: calc(100vh - var(--navbar-height, 70px)); 
+      background-color: var(--bg-color);
+      padding: clamp(1rem, 5vw, 2rem); /* Padding responsivo */
+      box-sizing: border-box; /* Incluir padding en el tamaño */
+      /* Animación de entrada */
+      opacity: 0; 
+      animation: fadeIn var(--animation-duration) ease-out forwards;
+  }
+  
+  /* Caja principal */
+  .login-box {
+      background-color: var(--card-bg);
+      box-shadow: var(--card-shadow); /* Usar variable de sombra */
+      padding: clamp(1.5rem, 5vw, 2.5rem); /* Padding responsivo */
+      border-radius: var(--border-radius); /* Usar variable de radio */
+      width: 100%;
+      max-width: 420px; /* Ligeramente más ancha */
+      box-sizing: border-box;
+      transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  }
+  
+  /* Título */
+  .login-title {
+      font-size: clamp(1.5rem, 5vw, 1.8rem); /* Tamaño responsivo */
+      font-weight: 600; /* Ligeramente menos pesado que bold */
+      margin-top: 0; /* Quitar margen superior */
+      margin-bottom: 2rem; /* Más espacio inferior */
+      text-align: center;
+      color: var(--text-color); /* Usar variable de texto */
+  }
+  
+  /* Formulario */
+  .login-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem; /* Más espacio entre elementos */
+  }
+  
+  /* Inputs */
+  .login-form label { /* Estilo opcional para etiquetas si las usas */
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: -0.75rem; /* Acercar etiqueta al input */
+      display: block;
+  }
+  
+  .login-form input {
+      padding: 0.85rem 1rem; /* Padding más generoso */
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-small); /* Usar radio pequeño */
+      font-size: 1rem; /* Fuente estándar */
+      background-color: var(--input-bg); /* Usar variable */
+      color: var(--text-color); /* Usar variable */
+      transition: border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+      box-sizing: border-box;
+      width: 100%;
+  }
+  
+  .login-form input::placeholder { /* Estilo para placeholder */
+      color: var(--text-secondary);
+      opacity: 0.7;
+  }
+  
+  .login-form input:focus {
+      outline: none; /* Quitar outline por defecto */
+      border-color: var(--primary-color); /* Resaltar borde con color primario */
+      box-shadow: var(--input-focus-shadow); /* Añadir sombra de focus */
+  }
+  
+  /* Botón principal (Login/Registro) */
+  .login-form button[type="submit"] { /* Ser más específico */
+      background-color: var(--primary-color);
+      color: white;
+      padding: 0.9rem 1rem; /* Más padding vertical */
+      border: none;
+      border-radius: var(--border-radius-small); /* Usar radio pequeño */
+      cursor: pointer;
+      font-size: 1.05rem; /* Ligeramente más grande */
+      font-weight: 600;
+      transition: all var(--transition-speed) ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      margin-top: 0.5rem; /* Espacio extra arriba */
+      -webkit-tap-highlight-color: transparent;
+  }
+  
+  .login-form button[type="submit"]:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-3px); /* Levantar */
+      box-shadow: var(--button-shadow); /* Sombra coloreada */
+      animation: pulse 1.5s infinite ease-out; /* Añadir pulso */
+  }
+  
+  .login-form button[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.2); 
+    animation: none; 
+  }
+  
+  /* Texto de alternar (¿Ya tienes cuenta? / ¿No tienes cuenta?) */
+  .toggle-text {
+      text-align: center;
+      margin-top: 1.5rem; /* Más espacio */
+      font-size: 0.9rem; /* Ligeramente más pequeño */
+      color: var(--text-secondary); /* Usar color secundario */
+  }
+  
+  /* Botón de alternar (el enlace para cambiar entre login/registro) */
+  .toggle-button {
+      background: none;
+      border: none;
+      color: var(--link-color); /* Usar color de enlace */
+      cursor: pointer;
+      font-weight: 600; /* Hacerlo un poco más notable */
+      text-decoration: underline;
+      padding: 0.25rem; /* Área de clic un poco mayor */
+      font-size: 0.9rem; /* Mismo tamaño que texto */
+      transition: color var(--transition-speed) ease;
+  }
+  
+  .toggle-button:hover {
+      color: var(--link-hover); /* Usar variable hover */
+      text-decoration-thickness: 2px; /* Opcional: hacer subrayado más grueso */
+  }
+  
+  /* Media Queries para Responsividad */
+  @media (max-width: 480px) {
+      .login-container {
+          padding: 1rem; /* Menos padding en contenedor */
+          align-items: flex-start; /* Alinear arriba en móvil */
+          padding-top: 2rem; /* Más espacio arriba */
+      }
+      .login-box {
+          padding: 1.5rem; /* Menos padding en la caja */
+          box-shadow: none; /* Opcional: quitar sombra en móvil */
+          border: 1px solid var(--border-color); /* Añadir borde si se quita sombra */
+      }
+      .login-title {
+          font-size: 1.4rem; /* Título más pequeño */
+          margin-bottom: 1.5rem;
+      }
+      .login-form {
+          gap: 1rem; /* Menos gap en el form */
+      }
+      .login-form input {
+          padding: 0.75rem 0.8rem; /* Menos padding en input */
+          font-size: 0.95rem;
+      }
+      .login-form button[type="submit"] {
+          padding: 0.8rem;
+          font-size: 1rem;
+      }
+  }

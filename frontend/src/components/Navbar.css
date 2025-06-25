@@ -1,0 +1,632 @@
+/* ======== Estilos base ======== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --navbar-bg: #fff;
+  --text-color: #000;
+  --bg-color: #f2f2f2;
+  --primary-color: #00913f;
+  --transition-speed: 0.3s;
+}
+
+/* ======== Navbar ======== */
+.navbar {
+  background-color: var(--navbar-bg);
+  color: var(--text-color);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.navbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Logo */
+.logo a {
+  font-size: clamp(1.1rem, 4vw, 1.5rem); /* Tamaño responsive */
+  font-weight: bold;
+  color: var(--text-color);
+  text-decoration: none;
+  white-space: nowrap;
+  margin-right: 20px;
+  transition: color var(--transition-speed);
+}
+
+.logo a:hover {
+  color: var(--primary-color);
+}
+
+/* Barra de búsqueda */
+.search-container {
+  flex: 1;
+  min-width: 150px;
+  max-width: 600px;
+  margin: 0 20px;
+  position: relative;
+  transition: all var(--transition-speed) ease;
+}
+
+.search-bar {
+  width: 100%;
+  padding: 10px 15px;
+  padding-right: 40px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 25px;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: all var(--transition-speed);
+}
+
+.search-bar:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0,145,63,0.2);
+}
+
+.search-close {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #777;
+  cursor: pointer;
+  display: none;
+  transition: color var(--transition-speed);
+}
+
+.search-close:hover {
+  color: var(--primary-color);
+}
+
+/* Botón de búsqueda móvil */
+.search-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: var(--text-color);
+  padding: 8px;
+  margin-right: 10px;
+  display: none;
+  transition: color var(--transition-speed);
+}
+
+.search-toggle:hover {
+  color: var(--primary-color);
+}
+
+/* Menú de escritorio */
+.desktop-menu {
+  display: flex;
+  align-items: center;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  margin-right: 20px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 500;
+  padding: 5px 0;
+  position: relative;
+  white-space: nowrap;
+  transition: color var(--transition-speed);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--primary-color);
+  transition: width var(--transition-speed);
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Botón de tema */
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--text-color);
+  padding: 8px 12px;
+  cursor: pointer;
+  color: var(--text-color);
+  border-radius: 25px;
+  transition: all var(--transition-speed);
+  font-size: 1rem;
+}
+
+.theme-toggle:hover {
+  background-color: var(--text-color);
+  color: var(--navbar-bg);
+}
+
+/* Controles móviles */
+.mobile-buttons {
+  display: none;
+  align-items: center;
+}
+
+.menu-toggle {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--text-color);
+  padding: 5px;
+  transition: all var(--transition-speed);
+}
+
+.menu-toggle:hover {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Menú desplegable móvil - Versión mejorada */
+.mobile-menu-container {
+  position: fixed;
+  /* Ajusta el top según la altura final de tu navbar en móvil */
+  top: 70px; /* Revisa si esta altura es correcta con los paddings finales */
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: var(--navbar-bg);
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  max-height: 0;
+  overflow-y: auto;
+  transition: max-height var(--transition-speed) ease-out;
+  z-index: 1001;
+  -webkit-overflow-scrolling: touch;
+}
+
+.mobile-menu-container.open {
+  /* Asegúrate que este cálculo coincida con el 'top' */
+  max-height: calc(100vh - 70px); 
+}
+
+.mobile-nav-links {
+  list-style: none;
+  padding: 20px;
+}
+
+.mobile-nav-links li {
+  margin-bottom: 15px;
+}
+
+.mobile-nav-links a {
+  text-decoration: none;
+  color: var(--text-color);
+  font-size: 1.1rem;
+  display: block;
+  padding: 12px 15px;
+  border-radius: 6px;
+  transition: background-color var(--transition-speed);
+}
+
+.mobile-nav-links a:hover {
+  background-color: var(--bg-color);
+}
+
+.mobile-theme {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* Overlay para el menú móvil */
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  opacity: 0;
+  transition: opacity var(--transition-speed);
+  pointer-events: none;
+}
+
+.mobile-menu-container.open ~ .menu-overlay {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Barra de scroll */
+.mobile-menu-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.mobile-menu-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
+  border-radius: 3px;
+}
+
+/* ======== Responsive ======== */
+
+/* SOLO CAMBIOS PARA 1004px-768px */
+@media (max-width: 1004px) and (min-width: 768px) {
+  .navbar-container {
+    padding: 15px 20px;
+  }
+  
+  .nav-links {
+    gap: 15px;
+    margin-right: 15px;
+  }
+  
+  .search-container {
+    min-width: 180px;
+    margin: 0 15px;
+  }
+  
+  .logo a {
+    margin-right: 15px;
+    font-size: 1.2rem;
+  }
+  
+  .nav-links a {
+    font-size: 0.9rem;
+  }
+  
+  .theme-toggle {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Ajuste extra para 900px-768px */
+@media (max-width: 900px) and (min-width: 768px) {
+  .nav-links {
+    gap: 12px; /* Más pequeño aquí */
+  }
+  
+  .search-container {
+    min-width: 150px;
+  }
+}
+
+/* Punto de corte existente 830px-769px */
+@media (max-width: 830px) and (min-width: 769px) {
+  /* Nota: Las reglas aquí anulan las de 900px en este rango */
+  .navbar-container {
+    padding: 15px 20px;
+  }
+  
+  .nav-links {
+    gap: 15px; /* Vuelve a ser 15px */
+    margin-right: 15px;
+  }
+  
+  .search-container {
+    min-width: 120px;
+    margin: 0 15px;
+  }
+  
+  .logo a {
+    margin-right: 15px;
+    font-size: 1.2rem;
+  }
+  
+  .theme-toggle {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+  }
+}
+
+
+@media (max-width: 815px) and (min-width: 769px) { 
+  /* Estas reglas anulan las del bloque 830px SOLO en este rango más específico */
+  
+  .nav-links {
+    gap: 10px; /* Reduce el espacio entre los enlaces */
+    margin-right: 10px; /* Reduce el margen derecho del contenedor de enlaces */
+  }
+
+
+  .search-container {
+     margin: 0 10px; /* Reducir espacio alrededor de la búsqueda */
+     /* Opcional: Si sigue rompiéndose, podrías reducir mínimamente el min-width SOLO aquí */
+     /* min-width: 110px; */
+  }
+  
+  .logo a {
+     margin-right: 10px; /* Reducir margen del logo */
+  }
+  
+}
+
+/* Tabletas (768px o menos) -> CAMBIO A LAYOUT MÓVIL */
+@media (max-width: 768px) {
+  .desktop-menu {
+      display: none;
+  }
+  
+  .mobile-buttons {
+      display: flex;
+  }
+  
+  .search-container {
+      position: absolute;
+      top: 100%; /* Se posicionará debajo de la navbar */
+      left: 0;
+      width: 100%;
+      margin: 0;
+      padding: 10px 20px;
+      background-color: var(--navbar-bg);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out; /* Añadida transición */
+      z-index: 998; 
+  }
+  
+  .search-container.active {
+      opacity: 1;
+      visibility: visible;
+  }
+  
+  .search-close {
+      display: block; /* Mostrar botón de cerrar en móvil */
+  }
+  
+  .search-toggle {
+      display: block; /* Mostrar botón de lupa en móvil */
+  }
+  
+  /* Ajustar padding y altura base para móvil si es necesario */
+  .navbar-container {
+      padding: 15px 20px; /* O el valor que deje la altura deseada, ej: 60px */
+      /* min-height: 60px; /* Podrías fijar una altura mínima */
+  }
+  
+  .logo a {
+      margin-right: 15px;
+  }
+  
+  /* Recalcular el 'top' del menú móvil según la altura de la navbar en este breakpoint */
+  .mobile-menu-container {
+      top: 60px; /* Ajusta este valor a la altura real de tu navbar en <= 768px */
+  }
+  
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 60px); /* Ajusta este valor también */
+  }
+}
+
+/* Móviles medianos (480px-640px) */
+@media (max-width: 640px) {
+  .navbar-container {
+      padding: 12px 15px; /* Menos padding */
+  }
+  
+  .search-bar {
+      padding: 8px 12px;
+      padding-right: 35px; /* Ajustar para el botón de cierre */
+  }
+  
+  /* Recalcular top del menú móvil si la altura de la navbar cambia */
+  .mobile-menu-container {
+      /* Si la altura de navbar con padding 12px 15px es ~56px */
+      top: 56px; 
+  }
+  
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 56px);
+  }
+}
+
+/* Móviles pequeños (480px o menos) */
+@media (max-width: 480px) {
+  .navbar-container {
+      padding: 10px 12px;
+  }
+  
+  .search-toggle, 
+  .menu-toggle {
+      font-size: 1.3rem;
+      padding: 6px;
+  }
+
+  .logo a {
+    font-size: 1.1rem; /* Puede ser necesario reducir tamaño del logo */
+  }
+  
+  /* Recalcular top del menú móvil */
+  .mobile-menu-container {
+      /* Si la altura de navbar con padding 10px 12px es ~50px */
+      top: 50px; 
+  }
+  
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 50px);
+  }
+}
+
+/* Pantallas muy pequeñas (350px o menos) */
+@media (max-width: 350px) {
+  .navbar-container {
+      padding: 8px 10px;
+  }
+  
+  .search-toggle, 
+  .menu-toggle {
+      font-size: 1.1rem;
+      padding: 4px;
+  }
+
+  .logo a {
+    font-size: 1rem; 
+    margin-right: 8px;
+  }
+  
+  /* Recalcular top del menú móvil */
+  .mobile-menu-container {
+       /* Si la altura de navbar con padding 8px 10px es ~46px */
+      top: 46px;
+  }
+  
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 46px);
+  }
+}
+
+/* Pantallas ultra pequeñas (240px o menos) */
+@media (max-width: 240px) {
+  .navbar {
+    /* Permitir scroll horizontal si todo se comprime demasiado */
+    overflow-x: auto; 
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .navbar-container {
+    min-width: 240px; /* Evitar que se colapse más allá de lo usable */
+    padding: 6px 8px;
+    justify-content: space-between; /* Asegurar espacio entre elementos */
+  }
+
+  .logo a {
+    font-size: 0.9rem;
+    margin-right: 5px;
+  }
+
+  .mobile-buttons {
+    /* Asegurar que los botones no se envuelvan */
+    white-space: nowrap; 
+  }
+
+  .search-toggle, 
+  .menu-toggle {
+    font-size: 1rem;
+    padding: 4px;
+    min-width: auto; /* Permitir que se encojan un poco */
+    margin-left: 5px; /* Añadir un poco de espacio entre ellos */
+  }
+
+  .search-toggle { margin-right: 0; } /* Quitar margen derecho si existe */
+
+  /* Recalcular top del menú móvil */
+  .mobile-menu-container {
+       /* Si la altura de navbar con padding 6px 8px es ~42px */
+      top: 42px; 
+  }
+
+  .mobile-menu-container.open {
+      max-height: calc(100vh - 42px);
+  }
+}
+
+/* Modo oscuro */
+.dark-mode {
+  --navbar-bg: #1a1a1a;
+  --text-color: #f0f0f0;
+  --bg-color: #2d2d2d;
+}
+
+.dark-mode .navbar {
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.dark-mode .search-bar {
+  background-color: #333;
+  border-color: #444;
+  color: #fff;
+}
+
+.dark-mode .search-bar:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(0,145,63,0.3); /* Ajuste ligero para dark mode */
+}
+
+.dark-mode .search-close {
+  color: #aaa;
+}
+
+.dark-mode .search-close:hover {
+  color: var(--primary-color);
+}
+
+.dark-mode .theme-toggle {
+  border-color: var(--text-color);
+  color: var(--text-color);
+}
+
+.dark-mode .theme-toggle:hover {
+  background-color: var(--text-color);
+  color: var(--navbar-bg);
+}
+
+.dark-mode .menu-toggle {
+  color: var(--text-color);
+}
+.dark-mode .menu-toggle:hover {
+  color: var(--primary-color);
+}
+
+.dark-mode .search-toggle {
+  color: var(--text-color);
+}
+.dark-mode .search-toggle:hover {
+  color: var(--primary-color);
+}
+
+.dark-mode .mobile-nav-links a:hover {
+  background-color: #3a3a3a;
+}
+
+.dark-mode .mobile-menu-container::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.2);
+}
+
+.dark-mode .menu-overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Mejoras de interacción */
+.menu-toggle:active, 
+.search-toggle:active,
+.theme-toggle:active,
+.search-close:active {
+  transform: scale(0.95); /* Feedback visual al presionar */
+}
+
+.nav-links a:active,
+.mobile-nav-links a:active {
+  opacity: 0.8; /* Feedback visual al presionar enlaces */
+}
+
+/* Transición suave del fondo del body al cambiar de tema */
+body {
+  background-color: var(--bg-color); /* Asegurar que el body use la variable */
+  transition: background-color 0.3s ease;
+}

@@ -1,0 +1,43 @@
+[
+    {
+      "id": 1,
+      "name": "Sony WH-1000XM5 Audífonos Inalámbricos",
+      "brand": "Sony",
+      "price": 5999.00,
+      "rating": 4.7,
+      "reviewsCount": 16537,
+      "images": [
+        "https://http2.mlstatic.com/D_NQ_NP_620187-MLU69726815032_052023-O.webp",
+        "https://mobomx.vtexassets.com/arquivos/ids/196876-800-auto?v=638212067600330000&width=800&height=auto&aspect=true",
+        "https://perfectchoice.me/cdn/shop/files/V-930051001_600x.png?v=1692040449"
+      ],
+      "description": "Estos audífonos ofrecen cancelación de ruido avanzada, diseño ergonómico y una experiencia de sonido envolvente.",
+      "specs": {
+        "Tipo de conexión": "Inalámbrico",
+        "Cancelación de ruido": "Activa",
+        "Marca": "Sony",
+        "Color": "Negro",
+        "Peso": "250 gramos",
+        "Compatibilidad": "Bluetooth 5.0",
+        "Duración Batería": "Hasta 30 horas (con NC)"
+      },
+      "reviews": [
+        {
+          "user": "Juan Pérez",
+          "title": "Excelentes audífonos",
+          "comment": "La cancelación de ruido es impresionante, la calidad de sonido es clara y equilibrada.",
+          "rating": 5,
+          "date": "2025-04-15"
+        },
+        {
+          "user": "Ana Gómez",
+          "title": "Muy buenos, pero caros",
+          "comment": "El precio es un poco alto, pero vale la pena por la calidad de sonido y la duración de la batería.",
+          "rating": 4,
+          "date": "2025-04-10"
+        }
+      ],
+      "inStock": true
+    }
+  ]
+  
