@@ -20,7 +20,6 @@ yarn-error.log*
 # 🐳 Docker
 # ====================
 *.tar
-**/Dockerfile
 docker-compose.override.yml
 .dockerignore
 
