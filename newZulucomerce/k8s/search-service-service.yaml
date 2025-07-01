@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: search-service
+  labels:
+    app: search-service
+    component: search
+spec:
+  type: ClusterIP
+  selector:
+    app: search-service
+  ports:
+  - name: http
+    port: 3005
+    targetPort: 3005 

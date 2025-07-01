@@ -1,0 +1,29 @@
+{
+  "name": "zulucommerce-search-service",
+  "version": "1.0.0",
+  "description": "Servicio de búsqueda para ZuluCommerce",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "keywords": ["search", "elasticsearch", "microservices", "zulucommerce"],
+  "author": "ZuluCommerce Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "helmet": "^7.1.0",
+    "morgan": "^1.10.0",
+    "dotenv": "^16.3.1",
+    "pg": "^8.11.3",
+    "express-validator": "^7.0.1",
+    "express-rate-limit": "^7.1.5",
+    "uuid": "^9.0.1",
+    "natural": "^6.10.4",
+    "stopword": "^2.0.8"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+} 
