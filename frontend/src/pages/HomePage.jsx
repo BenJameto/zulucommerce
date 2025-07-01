@@ -38,7 +38,7 @@ const HomePage = () => {
     setError(null);
     // Asegúrate que este endpoint exista y devuelva los productos como esperas.
     // Si tu API está en un puerto diferente o ruta, ajústalo.
-    fetch("http://localhost:4000/api/products") 
+    fetch("http://localhost:4002/api/products") 
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Error HTTP ${res.status}: No se pudo obtener la información de productos.`);

@@ -62,163 +62,318 @@ body {
 
 /* ======== Contenedor Principal ======== */
 .profile-container {
-  max-width: 100%;
-  width: 100%;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem; 
-  background-color: var(--bg-color); 
-  box-shadow: var(--primary-shadow); 
-  /* Transiciones específicas */
-  transition: background-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease; 
-  /* Animación de entrada */
-  opacity: 0; 
-  animation: fadeIn var(--animation-duration) ease-out forwards;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 /* ======== Títulos ======== */
 .profile-container h1 {
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  margin-top: 0; 
-  margin-bottom: 1.5rem;
-  color: var(--text-color);
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+/* Loading y Error States */
+.loading, .error {
+  text-align: center;
+  padding: 50px;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+.error {
+  color: #d32f2f;
+  background-color: #ffebee;
+  border-radius: 8px;
+  border: 1px solid #ffcdd2;
+}
+
+.error button {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 15px;
+}
+
+.error button:hover {
+  background-color: #b71c1c;
+}
+
+.error-message {
+  background-color: #ffebee;
+  color: #d32f2f;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #ffcdd2;
   text-align: center;
 }
 
-.profile-container h2 {
-  font-size: clamp(1.2rem, 4vw, 1.5rem);
-  margin: 1.5rem 0 1rem;
-  color: var(--text-color);
-  border-bottom: 1px solid var(--border-color);
-  padding-bottom: 0.5rem;
-  transition: border-color var(--transition-speed) ease; /* Añadir transición */
+/* Profile Sections */
+.profile-sections {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 1fr;
 }
 
-/* ======== Información de Usuario ======== */
-.user-info {
-  background: var(--card-bg);
-  padding: 1.25rem;
-  border-radius: 10px; /* Ligeramente más redondeado */
-  box-shadow: 0 2px 8px var(--shadow-color); 
-  margin-bottom: 1.5rem;
-  /* Transiciones específicas y añadir transform */
-  transition: background-color var(--transition-speed) ease, 
-              box-shadow var(--transition-speed) ease,
-              transform var(--transition-speed) ease;
+@media (min-width: 768px) {
+  .profile-sections {
+    grid-template-columns: 2fr 1fr;
+  }
 }
 
-/* Efecto Hover para la tarjeta de información */
-.user-info:hover {
-    transform: translateY(-5px); /* Elevar tarjeta */
-    box-shadow: 0 6px 16px var(--shadow-color); /* Sombra más pronunciada */
+.profile-section {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e0e0e0;
 }
 
-.user-info p {
-  margin: 0.75rem 0;
-  font-size: 1rem; 
-  text-align: left;
-  padding: 0 0.5rem;
-  overflow-wrap: break-word; 
-  word-break: break-word; 
-}
-
-.user-info strong {
-  display: inline-block; 
-  min-width: 80px; 
-  color: var(--primary-color);
-  font-weight: 600; 
-  margin-right: 0.5em; 
-}
-
-/* ======== Foto de Perfil ======== */
-.user-photo {
-  width: clamp(80px, 20vw, 120px); 
-  height: clamp(80px, 20vw, 120px);
-  margin: 0 auto 1.5rem; /* Más margen inferior */
-  border-radius: 50%;
-  overflow: hidden;
-  background-color: var(--placeholder-bg);
+.section-header {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  justify-content: center;
-  border: 3px solid var(--border-color); /* Borde más grueso */
-  /* Transiciones específicas y añadir transform */
-  transition: background-color var(--transition-speed) ease, 
-              border-color var(--transition-speed) ease,
-              transform var(--transition-speed) ease,
-              box-shadow var(--transition-speed) ease; 
-  cursor: pointer; /* Indicar que es interactivo */
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f5f5f5;
 }
 
-/* Efecto Hover para la foto */
-.user-photo:hover {
-    transform: scale(1.07); /* Escalar un poco */
-    box-shadow: 0 5px 15px var(--shadow-color); /* Añadir sombra */
-    border-color: var(--primary-color); /* Cambiar color de borde */
-    /* Opcional: animación bounce */
-    /* animation: subtleBounce 0.6s ease; */
+.section-header h2 {
+  color: #333;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
+.edit-btn {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
 
-.user-photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block; 
+.edit-btn:hover {
+  background-color: #1976d2;
+}
+
+/* User Info Display */
+.user-info {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.user-photo {
+  flex-shrink: 0;
 }
 
 .photo-placeholder {
-  font-size: clamp(2rem, 8vw, 3rem);
-  color: rgba(var(--text-color-rgb, 0, 0, 0), 0.5); 
-  background-color: var(--placeholder-bg); 
-  width: 100%;
-  height: 100%;
+  width: 80px;
+  height: 80px;
+  background-color: #e3f2fd;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  /* Transiciones específicas */
-  transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+  font-size: 2rem;
+  color: #2196f3;
+  border: 3px solid #bbdefb;
 }
 
-/* ======== Historial de Compras ======== */
-.profile-container ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+.user-details {
+  flex: 1;
 }
 
-.profile-container li {
-  background-color: var(--card-bg);
-  padding: 0.85rem 1.25rem; /* Ajustar padding */
-  margin-bottom: 0.75rem; /* Más espacio entre items */
-  border-radius: 8px; /* Redondeo consistente */
-  text-align: left;
-  font-size: 0.95rem;
-  box-shadow: 0 1px 4px var(--shadow-color); /* Sombra un poco más definida */
+.user-details p {
+  margin: 8px 0;
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.user-details strong {
+  color: #333;
+  font-weight: 600;
+  min-width: 120px;
+  display: inline-block;
+}
+
+/* Forms */
+.edit-form, .password-form {
   display: flex;
-  justify-content: space-between;
-  align-items: center; 
-  flex-wrap: wrap; 
-  gap: 0.5rem; 
-  /* Transiciones específicas y añadir transform */
-  transition: background-color var(--transition-speed) ease, 
-              box-shadow var(--transition-speed) ease,
-              transform var(--transition-speed) ease;
-  overflow-wrap: break-word; 
-  word-break: break-word;
-  cursor: default; /* Cambiar cursor si no son clickables */
+  flex-direction: column;
+  gap: 20px;
 }
 
-/* Efecto Hover para los items de la lista */
-.profile-container li:hover {
-    transform: translateY(-3px) scale(1.01); /* Elevar y escalar ligeramente */
-    box-shadow: 0 5px 12px var(--shadow-color); /* Sombra más pronunciada */
-    background-color: var(--card-hover-bg); /* Fondo de hover (definido en :root) */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.profile-container li span {
-  color: var(--primary-color);
-  font-weight: 500; 
+.form-group label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 12px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  background-color: #fafafa;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #2196f3;
+  background-color: white;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.save-btn {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.save-btn:hover {
+  background-color: #388e3c;
+}
+
+.cancel-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.cancel-btn:hover {
+  background-color: #d32f2f;
+}
+
+/* Account Info */
+.account-info {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.account-info p {
+  margin: 10px 0;
+  color: #555;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.account-info strong {
+  color: #333;
+  font-weight: 600;
+  min-width: 140px;
+  display: inline-block;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 15px;
+  }
+  
+  .profile-container h1 {
+    font-size: 2rem;
+  }
+  
+  .user-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .photo-placeholder {
+    margin: 0 auto;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .section-header {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+  }
+  
+  .user-details strong,
+  .account-info strong {
+    min-width: auto;
+    display: block;
+    margin-bottom: 5px;
+  }
+}
+
+/* Animation for form transitions */
+.edit-form,
+.password-form {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Success message styling */
+.success-message {
+  background-color: #e8f5e8;
+  color: #2e7d32;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #c8e6c9;
+  text-align: center;
 }
 
 /* ======== Media Queries (Sin cambios, ya eran robustas) ======== */

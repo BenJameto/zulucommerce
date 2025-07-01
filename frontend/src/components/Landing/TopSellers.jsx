@@ -3,13 +3,33 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Landing.css";
 
-const handleAddToCart = (product) => {
-  console.log(`Añadido al carrito: ${product.name} (ID: ${product.id})`);
-  alert(`${product.name} añadido al carrito!`);
+const userId = 1; // Fijo para pruebas
+
+const handleAddToCart = async (product) => {
+  try {
+    const response = await fetch("http://localhost:4001/cart", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, productId: product.id, quantity: 1 })
+    });
+    if (!response.ok) throw new Error("Error al agregar al carrito");
+    alert(`${product.name} añadido al carrito!`);
+  } catch (err) {
+    alert("No se pudo agregar al carrito");
+  }
 };
-const handleAddToWishlist = (product) => {
-  console.log(`Añadido a lista de deseos: ${product.name} (ID: ${product.id})`);
-  alert(`${product.name} añadido a la lista de deseos!`);
+const handleAddToWishlist = async (product) => {
+  try {
+    const response = await fetch("http://localhost:3003/api/wishlist", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId, productId: product.id })
+    });
+    if (!response.ok) throw new Error("Error al agregar a la lista de deseos");
+    alert(`${product.name} añadido a la lista de deseos!`);
+  } catch (err) {
+    alert("No se pudo agregar a la lista de deseos");
+  }
 };
 
 const TopSellers = ({ products = [] }) => {

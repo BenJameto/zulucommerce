@@ -15,7 +15,7 @@ const pool = new Pool({
     user: process.env.DB_USER || 'zulucommerce',
     password: process.env.DB_PASSWORD || 'zulucommerce123',
     host: process.env.DB_HOST || 'localhost',
-    port: process.env.DB_PORT || 5433,
+    port: parseInt(process.env.DB_PORT) || 5433,
     database: process.env.DB_DATABASE || 'zulucommerce'
 });
 
@@ -46,7 +46,7 @@ const getProducts = async (req, res) => {
 // ✅ POST
 const addProduct = async (req, res) => {
     try {
-        const { name, price, image } = req.body;
+    const { name, price, image } = req.body;
         
         if (!name || !price || !image) {
             return res.status(400).json({ error: 'Todos los campos son requeridos' });
@@ -63,8 +63,24 @@ const addProduct = async (req, res) => {
     }
 };
 
+// ✅ GET producto por ID
+const getProductById = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query('SELECT id, name, CAST(price AS FLOAT) as price, image FROM products WHERE id = $1', [id]);
+        if (result.rows.length === 0) {
+            return res.status(404).json({ message: 'Producto no encontrado' });
+        }
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error('❌ Error al obtener producto por ID:', error);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+};
+
 // ✅ Exporta todo correctamente
 module.exports = {
     getProducts,
-    addProduct
+    addProduct,
+    getProductById
 };
