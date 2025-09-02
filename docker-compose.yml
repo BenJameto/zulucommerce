@@ -1,0 +1,295 @@
+version: '3.8'
+
+services:
+  # Base de datos principal para usuarios y autenticación
+  postgres-auth:
+    image: postgres:15
+    container_name: zulucommerce-postgres-auth
+    environment:
+      POSTGRES_USER: zulucommerce
+      POSTGRES_PASSWORD: zulucommerce123
+      POSTGRES_DB: auth_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_auth_data:/var/lib/postgresql/data
+    networks:
+      - zulucommerce-network
+
+  # Base de datos para productos
+  postgres-products:
+    image: postgres:15
+    container_name: zulucommerce-postgres-products
+    environment:
+      POSTGRES_USER: zulucommerce
+      POSTGRES_PASSWORD: zulucommerce123
+      POSTGRES_DB: products_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_products_data:/var/lib/postgresql/data
+    networks:
+      - zulucommerce-network
+
+  # Base de datos para órdenes
+  postgres-orders:
+    image: postgres:15
+    container_name: zulucommerce-postgres-orders
+    environment:
+      POSTGRES_USER: zulucommerce
+      POSTGRES_PASSWORD: zulucommerce123
+      POSTGRES_DB: orders_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_orders_data:/var/lib/postgresql/data
+    networks:
+      - zulucommerce-network
+
+  # Base de datos para inventario
+  postgres-inventory:
+    image: postgres:15
+    container_name: zulucommerce-postgres-inventory
+    environment:
+      POSTGRES_USER: zulucommerce
+      POSTGRES_PASSWORD: zulucommerce123
+      POSTGRES_DB: inventory_db
+    ports:
+      - "5435:5432"
+    volumes:
+      - postgres_inventory_data:/var/lib/postgresql/data
+    networks:
+      - zulucommerce-network
+
+  # Redis para caché y sesiones
+  redis:
+    image: redis:7-alpine
+    container_name: zulucommerce-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - zulucommerce-network
+
+  # RabbitMQ para mensajería entre microservicios
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: zulucommerce-rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: zulucommerce
+      RABBITMQ_DEFAULT_PASS: zulucommerce123
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - zulucommerce-network
+
+  # API Gateway
+  api-gateway:
+    build:
+      context: ./backend/api-gateway
+      dockerfile: Dockerfile
+    container_name: zulucommerce-api-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - AUTH_SERVICE_URL=http://auth-service:4001
+      - USER_SERVICE_URL=http://user-service:4002
+      - PRODUCT_SERVICE_URL=http://product-service:4003
+      - CART_SERVICE_URL=http://cart-service:4004
+      - ORDER_SERVICE_URL=http://order-service:4005
+      - PAYMENT_SERVICE_URL=http://payment-service:4006
+      - INVENTORY_SERVICE_URL=http://inventory-service:4007
+    depends_on:
+      - redis
+    networks:
+      - zulucommerce-network
+
+  # Auth Service
+  auth-service:
+    build:
+      context: ./backend/auth-service
+      dockerfile: Dockerfile
+    container_name: zulucommerce-auth-service
+    ports:
+      - "4001:4001"
+    environment:
+      - NODE_ENV=development
+      - PORT=4001
+      - DB_HOST=postgres-auth
+      - DB_PORT=5432
+      - DB_USER=zulucommerce
+      - DB_PASSWORD=zulucommerce123
+      - DB_NAME=auth_db
+      - JWT_SECRET=your-super-secret-jwt-key
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - postgres-auth
+      - redis
+    networks:
+      - zulucommerce-network
+
+  # User Service (temporalmente comentado hasta implementarlo)
+  # user-service:
+  #   build:
+  #     context: ./backend/user-service
+  #     dockerfile: Dockerfile
+  #   container_name: zulucommerce-user-service
+  #   ports:
+  #     - "4002:4002"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=4002
+  #     - DB_HOST=postgres-auth
+  #     - DB_PORT=5432
+  #     - DB_USER=zulucommerce
+  #     - DB_PASSWORD=zulucommerce123
+  #     - DB_NAME=auth_db
+  #     - REDIS_URL=redis://redis:6379
+  #   depends_on:
+  #     - postgres-auth
+  #     - redis
+  #   networks:
+  #     - zulucommerce-network
+
+  # Product Service
+  product-service:
+    build:
+      context: ./backend/product-service
+      dockerfile: Dockerfile
+    container_name: zulucommerce-product-service
+    ports:
+      - "4003:4003"
+    environment:
+      - NODE_ENV=development
+      - PORT=4003
+      - DB_HOST=postgres-products
+      - DB_PORT=5432
+      - DB_USER=zulucommerce
+      - DB_PASSWORD=zulucommerce123
+      - DB_NAME=products_db
+      - REDIS_URL=redis://redis:6379
+      - RABBITMQ_URL=amqp://zulucommerce:zulucommerce123@rabbitmq:5672
+    depends_on:
+      - postgres-products
+      - redis
+      - rabbitmq
+    networks:
+      - zulucommerce-network
+
+  # Cart Service
+  cart-service:
+    build:
+      context: ./backend/cart-service
+      dockerfile: Dockerfile
+    container_name: zulucommerce-cart-service
+    ports:
+      - "4004:4004"
+    environment:
+      - NODE_ENV=development
+      - PORT=4004
+      - REDIS_URL=redis://redis:6379
+      - PRODUCT_SERVICE_URL=http://product-service:4003
+    depends_on:
+      - redis
+      - product-service
+    networks:
+      - zulucommerce-network
+
+  # Order Service (temporalmente comentado hasta implementarlo)
+  # order-service:
+  #   build:
+  #     context: ./backend/order-service
+  #     dockerfile: Dockerfile
+  #   container_name: zulucommerce-order-service
+  #   ports:
+  #     - "4005:4005"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=4005
+  #     - DB_HOST=postgres-orders
+  #     - DB_PORT=5432
+  #     - DB_USER=zulucommerce
+  #     - DB_PASSWORD=zulucommerce123
+  #     - DB_NAME=orders_db
+  #     - RABBITMQ_URL=amqp://zulucommerce:zulucommerce123@rabbitmq:5672
+  #     - PAYMENT_SERVICE_URL=http://payment-service:4006
+  #     - INVENTORY_SERVICE_URL=http://inventory-service:4007
+  #   depends_on:
+  #     - postgres-orders
+  #     - rabbitmq
+  #     - payment-service
+  #     - inventory-service
+  #   networks:
+  #     - zulucommerce-network
+
+  # Payment Service (temporalmente comentado hasta implementarlo)
+  # payment-service:
+  #   build:
+  #     context: ./backend/payment-service
+  #     dockerfile: Dockerfile
+  #   container_name: zulucommerce-payment-service
+  #   ports:
+  #     - "4006:4006"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=4006
+  #     - RABBITMQ_URL=amqp://zulucommerce:zulucommerce123@rabbitmq:5672
+  #   depends_on:
+  #     - rabbitmq
+  #   networks:
+  #     - zulucommerce-network
+
+  # Inventory Service (temporalmente comentado hasta implementarlo)
+  # inventory-service:
+  #   build:
+  #     context: ./backend/inventory-service
+  #     dockerfile: Dockerfile
+  #   container_name: zulucommerce-inventory-service
+  #   ports:
+  #     - "4007:4007"
+  #   environment:
+  #     - NODE_ENV=development
+  #     - PORT=4007
+  #     - DB_HOST=postgres-inventory
+  #     - DB_PORT=5432
+  #     - DB_USER=zulucommerce
+  #     - DB_PASSWORD=zulucommerce123
+  #     - DB_NAME=inventory_db
+  #     - RABBITMQ_URL=amqp://zulucommerce:zulucommerce123@rabbitmq:5672
+  #   depends_on:
+  #     - postgres-inventory
+  #     - rabbitmq
+  #   networks:
+  #     - zulucommerce-network
+
+  # Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: zulucommerce-frontend
+    ports:
+      - "3001:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:3000
+    depends_on:
+      - api-gateway
+    networks:
+      - zulucommerce-network
+
+volumes:
+  postgres_auth_data:
+  postgres_products_data:
+  postgres_orders_data:
+  postgres_inventory_data:
+  redis_data:
+  rabbitmq_data:
+
+networks:
+  zulucommerce-network:
+    driver: bridge 

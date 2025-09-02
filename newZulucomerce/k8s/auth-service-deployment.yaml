@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  labels:
+    app: auth-service
+    component: auth
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+        component: auth
+    spec:
+      containers:
+      - name: auth-service
+        image: zulucommerce-auth-service:latest
+        imagePullPolicy: Never  # Usar imagen local
+        ports:
+        - containerPort: 3001
+          name: http
+        env:
+        - name: PORT
+          value: "3001"
+        - name: NODE_ENV
+          value: "production"
+        - name: DB_HOST
+          value: "postgres-service"
+        - name: DB_PORT
+          value: "5432"
+        - name: DB_NAME
+          value: "zulucommerce"
+        - name: DB_USER
+          value: "zulucommerce"
+        - name: DB_PASSWORD
+          value: "zulucommerce123"
+        - name: JWT_SECRET
+          value: "zulucommerce-jwt-secret-key-2024"
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3001
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3 

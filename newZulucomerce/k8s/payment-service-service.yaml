@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: payment-service
+  labels:
+    app: payment-service
+    component: payment
+spec:
+  type: ClusterIP
+  selector:
+    app: payment-service
+  ports:
+  - name: http
+    port: 3006
+    targetPort: 3006 

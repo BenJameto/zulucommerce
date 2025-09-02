@@ -1,0 +1,276 @@
+/* ======== Variables ======== */
+:root {
+  /* Paleta Inspirada en ProductDetail (Ajusta si prefieres otros tonos) */
+  --primary-color: #FFA41C; /* Naranja/Amarillo principal */
+  --primary-hover: #FF8C00; /* Naranja más oscuro para hover */
+  --primary-rgb: 255, 164, 28; /* Para usar en rgba() con opacidad */
+  
+  /* Colores Base */
+  --bg-color: #f8f9fa; /* Un blanco ligeramente más suave */
+  --card-bg: #ffffff; /* Fondo de las tarjetas */
+  --text-color: #111111; /* Texto principal oscuro */
+  --secondary-text: #555555; /* Texto secundario gris */
+  --border-color: #e0e0e0; /* Color de borde sutil */
+  
+  /* Sombras */
+  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra base para tarjetas */
+  --card-shadow-hover: 0 8px 20px rgba(0, 0, 0, 0.12); /* Sombra más pronunciada en hover */
+  --button-shadow: 0 3px 8px rgba(var(--primary-rgb), 0.3); /* Sombra para botón */
+  
+  /* Transiciones y Animaciones */
+  --transition-speed: 0.3s;
+  --animation-duration: 0.5s;
+}
+
+/* Podrías añadir aquí variables para modo oscuro si lo implementas en el futuro */
+/* .dark-mode { ... } */
+
+/* ======== Animaciones (Traídas de ProductDetailPage.css) ======== */
+@keyframes subtleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); } /* Un poco menos intenso para la home */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0.4); }
+  70% { box-shadow: 0 0 0 10px rgba(var(--primary-rgb), 0); }
+  100% { box-shadow: 0 0 0 0 rgba(var(--primary-rgb), 0); }
+}
+
+/* ======== Estilos Base ======== */
+body { /* Aplicar color de fondo base al body */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  margin: 0; /* Asegurar que no haya margen por defecto */
+  font-family: Arial, sans-serif; /* Mantener consistencia */
+}
+
+/* ======== Contenedor Principal ======== */
+.home-container {
+  text-align: center;
+  padding: clamp(15px, 4vw, 30px); /* Padding responsivo */
+  max-width: 1400px; /* Limitar ancho máximo como en ProductDetail */
+  margin: 0 auto; /* Centrar el contenedor */
+  overflow-x: hidden;
+  box-sizing: border-box;
+  /* Animación de entrada */
+  opacity: 0; /* Inicia invisible para el fadeIn */
+  animation: fadeIn var(--animation-duration) ease-out forwards;
+  animation-delay: 0.1s; /* Pequeño retraso para que se note */
+}
+
+/* ======== Texto de Bienvenida ======== */
+.welcome-title {
+  font-size: clamp(1.8rem, 5vw, 2.8rem); /* Tamaño ajustado y más impactante */
+  margin: 20px auto 30px; /* Más margen inferior */
+  padding: 0 10px;
+  max-width: 90%;
+  word-wrap: break-word;
+  overflow-wrap: break-word; /* Cambiado de 'anywhere' a 'break-word' */
+  hyphens: auto;
+  line-height: 1.35;
+  color: var(--text-color);
+  font-weight: 600; /* Un poco más de peso */
+  text-wrap: balance; /* Mejora el balanceo de líneas */
+  display: inline-block;
+}
+
+/* ======== Grid de Productos ======== */
+.product-grid {
+  display: grid;
+  /* Columnas responsivas automáticas */
+  grid-template-columns: repeat(auto-fill, minmax(clamp(150px, 25vw, 280px), 1fr)); 
+  gap: clamp(15px, 3vw, 25px); /* Gap responsivo */
+  padding: 0; /* Quitar padding extra aquí, ya está en home-container */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ======== Tarjetas de Producto Mejoradas ======== */
+.product-card {
+  border: 1px solid var(--border-color);
+  border-radius: 12px; /* Bordes más redondeados */
+  padding: clamp(10px, 2vw, 15px); /* Padding responsivo */
+  text-align: center;
+  background-color: var(--card-bg);
+  color: var(--text-color);
+  box-shadow: var(--card-shadow);
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  min-width: 0;
+  overflow: hidden;
+  display: flex; /* Usar flex para mejor control interno */
+  flex-direction: column; /* Alinear contenido verticalmente */
+  justify-content: space-between; /* Distribuir espacio */
+}
+
+.product-card:hover {
+  transform: translateY(-6px); /* Elevación más notable */
+  box-shadow: var(--card-shadow-hover);
+}
+
+/* Contenedor de la imagen para controlar hover */
+.product-image-container {
+  width: 100%;
+  height: clamp(120px, 20vw, 180px); /* Altura responsiva */
+  margin-bottom: 15px;
+  overflow: hidden; /* Necesario para el efecto de zoom */
+  border-radius: 8px; /* Redondear contenedor de imagen */
+  background-color: #f9f9f9; /* Fondo mientras carga */
+}
+
+.product-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Cambiado a 'contain' para ver producto completo */
+  display: block; /* Evitar espacio extra */
+  transition: transform var(--transition-speed) ease; /* Transición para el zoom */
+}
+
+.product-card:hover img {
+  transform: scale(1.08); /* Efecto zoom en la imagen */
+  /* Podrías añadir la animación subtleBounce aquí si prefieres: */
+  /* animation: subtleBounce 0.6s ease; */
+}
+
+/* Nombre del producto */
+.product-name {
+  font-size: clamp(0.95rem, 2.5vw, 1.1rem);
+  font-weight: 500;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  color: var(--text-color);
+  /* Limitar texto a 2 líneas con puntos suspensivos (opcional) */
+  display: -webkit-box;
+  
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 2.8em; /* Altura mínima para 2 líneas */
+}
+
+/* Precio (añadido) */
+.product-price {
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    font-weight: 600;
+    color: var(--primary-color); /* Usar color primario o un color de precio específico */
+    margin-bottom: 12px;
+}
+
+/* ======== Botón de Detalles Mejorado ======== */
+.details-btn {
+  display: inline-block;
+  margin-top: auto; /* Empujar el botón hacia abajo en flex container */
+  padding: clamp(8px, 1.5vw, 10px) clamp(15px, 3vw, 20px); /* Padding responsivo */
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border: none; /* Quitar borde si lo hubiera */
+  border-radius: 8px; /* Más redondeado */
+  font-size: clamp(0.85rem, 2vw, 0.95rem);
+  font-weight: 600;
+  transition: all var(--transition-speed) ease; /* Transición completa */
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  -webkit-tap-highlight-color: transparent; /* Quitar highlight azul en móvil */
+}
+
+.details-btn:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-3px); /* Levantar el botón */
+  box-shadow: var(--button-shadow); /* Sombra coloreada */
+  /* Animación de pulso en hover */
+  animation: pulse 1.5s infinite ease-out; 
+}
+
+.details-btn:active {
+  transform: translateY(0); /* Resetear posición al hacer clic */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1); /* Sombra mínima al presionar */
+  animation: none; /* Detener animación pulse al presionar */
+}
+
+/* ======== Media Queries Optimizadas ======== */
+/* No se necesitan tantas queries si usamos bien clamp() y auto-fill grid */
+/* Ajustes principales */
+
+/* Tablet pequeña/Móvil grande (aprox. 600px o menos) */
+@media (max-width: 600px) {
+  /* La grid ya se ajusta sola con auto-fill, pero podemos afinar si es necesario */
+  /* .product-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); } */
+  .welcome-title {
+    font-size: clamp(1.5rem, 6vw, 2rem); /* Ajustar clamp para este rango */
+  }
+}
+
+/* Móvil pequeño (aprox. 400px o menos) */
+@media (max-width: 400px) {
+  .home-container {
+    padding: 10px;
+  }
+  .product-grid {
+    gap: 12px;
+    /* Forzar 1 columna si auto-fill no se ve bien */
+    /* grid-template-columns: 1fr;  */
+  }
+  .product-card {
+    padding: 10px;
+  }
+  .product-image-container {
+    height: 110px;
+  }
+  .product-name {
+      font-size: 0.9rem;
+      min-height: 2.6em; /* Ajustar altura mínima */
+  }
+  .product-price {
+      font-size: 1rem;
+  }
+  .details-btn {
+    padding: 8px 15px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Ajustes para pantallas MUY estrechas (ya estaban bien definidos) */
+@media (max-width: 220px) {
+  .welcome-title {
+    font-size: clamp(0.9rem, 5vw, 1.1rem);
+    letter-spacing: -0.3px;
+    word-spacing: -0.5px;
+    padding: 0 3px;
+    margin: 8px 0 15px; /* Ajustar margen */
+    line-height: 1.2;
+    overflow-wrap: break-word;
+  }
+  
+  .product-grid {
+    /* Forzar 1 columna definitivamente */
+    grid-template-columns: 1fr; 
+    gap: 8px;
+  }
+  
+  .product-card {
+    border-radius: 8px;
+  }
+  
+  .product-image-container {
+      height: 100px; /* Reducir más la imagen */
+  }
+}
+
+/* Ajuste de emergencia (<180px) */
+@media (max-width: 180px) {
+  .welcome-title {
+    font-size: 0.8rem;
+    white-space: normal; /* Asegurar que el texto se envuelva */
+    word-break: break-word; /* Romper palabras si es necesario */
+  }
+  .product-image-container {
+      height: 80px; /* Imagen mínima */
+  }
+}
+ 

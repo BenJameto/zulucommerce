@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-service
+  template:
+    metadata:
+      labels:
+        app: inventory-service
+    spec:
+      containers:
+        - name: inventory-service
+          image: inventory-service:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 3009
+          env:
+            - name: PORT
+              value: "3009"
+            - name: DB_HOST
+              value: "postgres-service"
+            - name: DB_USER
+              value: "postgres"
+            - name: DB_PASSWORD
+              value: "password"
+            - name: DB_NAME
+              value: "zulucommerce"
+            - name: REDIS_URL
+              value: "redis://redis-service:6379" 
